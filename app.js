@@ -1,6 +1,6 @@
 import {REAR_PIVOT} from './recovery-details.js';
 import {HOOD_PIVOT} from './engine-bay.js';
-import {loadR4} from './glb-loader.js';
+import {loadR4} from './glb-loader.js?r7=20261018';
 import {pistonPose,valveLift} from './mechanics.js';
 'use strict';
 /* Portable, standalone WebGL2 renderer. There are no external JS/CDN dependencies.
