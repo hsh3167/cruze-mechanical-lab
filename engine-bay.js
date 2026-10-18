@@ -7,7 +7,7 @@ export function hoodPoint(p,open=true){const a=open?-65*Math.PI/180:0,c=Math.cos
 const sub=(a,b)=>a.map((v,i)=>v-b[i]);
 const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
 const norm=a=>{const l=Math.hypot(...a)||1;return a.map(v=>v/l)};
-class Mesh{
+export class Mesh{
  constructor(){this.p=[];this.i=[]}
  box(c,s){const [x,y,z]=s.map(v=>v/2),v=[[-x,-y,-z],[x,-y,-z],[x,y,-z],[-x,y,-z],[-x,-y,z],[x,-y,z],[x,y,z],[-x,y,z]];for(const f of [[0,3,2,1],[4,5,6,7],[0,4,7,3],[1,2,6,5],[0,1,5,4],[3,7,6,2]]){const n=this.p.length/3;for(const k of f)this.p.push(...v[k].map((a,j)=>a+c[j]));this.i.push(n,n+1,n+2,n,n+2,n+3)}return this}
  tube(path,r,n=12,caps=true){const start=this.p.length/3;for(let k=0;k<path.length;k++){const t=norm(sub(path[Math.min(k+1,path.length-1)],path[Math.max(k-1,0)])),u=norm(cross(t,Math.abs(t[1])<.9?[0,1,0]:[1,0,0])),v=cross(t,u);for(let j=0;j<n;j++){const a=j/n*Math.PI*2;this.p.push(...path[k].map((x,i)=>x+r*(u[i]*Math.cos(a)+v[i]*Math.sin(a))))}}for(let k=0;k<path.length-1;k++)for(let j=0;j<n;j++){const a=start+k*n+j,b=start+k*n+(j+1)%n;this.i.push(a,b,b+n,a,b+n,a+n)}if(caps){for(const k of [0,path.length-1]){const c=this.p.length/3;this.p.push(...path[k]);for(let j=0;j<n;j++){const a=start+k*n+j,b=start+k*n+(j+1)%n;this.i.push(c,...(k?[a,b]:[b,a]))}}}return this}
@@ -93,3 +93,4 @@ export function buildEngineBay(){const parts=[],C={steel:'#768a99',paint:'#576c7
  box('heatshield','터보 상부 방열판','intake','silver',[-.7,1.43,-2.05],[2.05,.12,1.13],'기존 터보·배기 매니폴드 위쪽의 개념 방열판입니다.');
  return parts;
 }
+

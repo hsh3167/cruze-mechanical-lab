@@ -1,3 +1,4 @@
+import {REAR_PIVOT} from './recovery-details.js';
 import {HOOD_PIVOT} from './engine-bay.js';
 import {loadR4} from './glb-loader.js';
 import {pistonPose,valveLift} from './mechanics.js';
@@ -10,7 +11,7 @@ import {pistonPose,valveLift} from './mechanics.js';
 const $=(s)=>document.querySelector(s);
 const sysColors={"engine": "#b7c8d9", "intake": "#e18b71", "ignition": "#ed9d95", "cooling": "#4dcbd3", "lubrication": "#e9a84b", "transmission": "#b39ad9", "structure": "#97aabf", "suspension": "#f3bd65", "steering": "#d7b867", "brakes": "#d78787", "wheels": "#8b9baa", "exhaust": "#b9a38b", "fuel": "#afbd80", "hvac": "#71b6cc", "electrical": "#b49be6", "interior": "#a8aa98", "body": "#738ba3"};
 const strokeColors=['#e7ac67','#ac94dc','#63b5d8','#71c8a4'];
-const state={playing:false,speed:1,angle:0,explode:0,ghost:true,flow:true,tags:true,mode:'overview',visible:new Set(Object.keys(sysColors)),selected:'block',selectedCylinder:0,showBody:false,hoodOpen:true,coolingPlaying:true,opening:0,hidden:new Set(),isolated:null,section:false,cutZ:0,oilFlow:true,az:-.49,el:.35,dist:12,target:[-.3,.22,.2],drag:null,parts:[],fps:0};
+const state={rearFold:0,playing:false,speed:1,angle:0,explode:0,ghost:true,flow:true,tags:true,mode:'overview',visible:new Set(Object.keys(sysColors)),selected:'block',selectedCylinder:0,showBody:false,hoodOpen:true,coolingPlaying:true,opening:0,hidden:new Set(),isolated:null,section:false,cutZ:0,oilFlow:true,az:-.49,el:.35,dist:12,target:[-.3,.22,.2],drag:null,parts:[],fps:0};
 let coolingRotorAngle=0;
 let model=null,renderer=null,lastTime=0,tagLinks=[],coolParticles=[],oilParticles=[];
 const clamp=(v,min,max)=>Math.min(max,Math.max(min,v)),rad=(d)=>d*Math.PI/180;
@@ -24,7 +25,7 @@ const mat={
   lookAt:(eye,target)=>{const z=vec3.norm(vec3.sub(eye,target)),x=vec3.norm(vec3.cross([0,1,0],z)),y=vec3.cross(z,x);return new Float32Array([x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,-vec3.dot(x,eye),-vec3.dot(y,eye),-vec3.dot(z,eye),1])},
   point:(m,v)=>[m[0]*v[0]+m[4]*v[1]+m[8]*v[2]+m[12],m[1]*v[0]+m[5]*v[1]+m[9]*v[2]+m[13],m[2]*v[0]+m[6]*v[1]+m[10]*v[2]+m[14]]
 };
-function partVisible(p){if(!state.visible.has(p.system)||state.hidden.has(p.id)||(state.isolated&&state.isolated!==p.id))return false;
+function partVisible(p){if(state.mode==='cabin'&&p.meta?.engineBay)return false;if(!state.visible.has(p.system)||state.hidden.has(p.id)||(state.isolated&&state.isolated!==p.id))return false;
  if(p.meta?.hoodProp&&(!state.hoodOpen||(!state.showBody&&state.mode!=='bay')))return false;
  if(p.meta?.hoodAttached&&!state.showBody&&!['bay','exterior'].includes(state.mode))return false;
  if(state.mode==='bay'){
@@ -99,6 +100,7 @@ class WebGLViewer {
    if(u.coolingMotion==='thermostatValve')pose=mat.trans(0,0,state.opening*.14);
    if(u.coolingMotion==='thermostatSpring'){const scale=mat.id();scale[10]=1-state.opening*.25;const top=u.springTop||1.3;pose=mat.mul(mat.trans(0,0,top),mat.mul(scale,mat.trans(0,0,-top)))}
    if(part.id==='hood'||u.hoodAttached)pose=pivotRotate(HOOD_PIVOT,state.hoodOpen?-65*Math.PI/180:0);
+   if(part.id==='rear_seat_back'||part.id.startsWith('rear_headrest_'))pose=pivotRotate(REAR_PIVOT,Math.PI*.46*state.rearFold);
    if(a.kind==='combustion'){const deg=((angle*180/Math.PI-k.firingOffset[a.index])%720+720)%720;part.dynamicAlpha=state.mode==='ignition'&&deg<75?.64*Math.pow(Math.sin(Math.PI*deg/75),.75):0}
    const ex=(['pump','thermostat'].includes(state.mode)&&u.explodeOffset?u.explodeOffset:part.explode).map(v=>v*state.explode*.014);part.model=mat.mul(mat.trans(...ex),pose);
   }
@@ -127,7 +129,7 @@ function refreshToggles(){document.querySelectorAll('.system-toggle').forEach(b=
 function setSelected(id){const p=renderer.partById.get(id);if(!p)return;state.selected=id;$('#partSystem').textContent=p.category;$('#partTitle').textContent=p.name;$('#partDesc').textContent=p.description;$('#partId').textContent=id.toUpperCase();updatePartList()}
 function updatePartList(){if(!renderer)return;const query=$('#searchParts').value.toLowerCase().trim();const valid=renderer.parts.filter(p=>partVisible(p)&&(!query||(p.name+p.description+p.category).toLowerCase().includes(query)));$('#visibleCount').textContent=valid.length+'개';const root=$('#partList');root.innerHTML='';for(const p of valid){const btn=document.createElement('button');btn.className='part-item'+(p.id===state.selected?' selected':'');btn.style.setProperty('--swatch',p.color);btn.innerHTML=`<span>${p.name}</span><small>↗</small>`;btn.onclick=()=>setSelected(p.id);root.appendChild(btn)}}
 function setMode(name){const all=Object.keys(sysColors);const modes={
-bay:{visible:all,selected:'bay_upper_support',badge:'R6 · 본네트 아래 구조와 정비 포인트',text:'전방 지지대, 탱크 주입구, 흡기 덕트, 배터리 단자와 배선을 관찰합니다. 원본 장치는 유지하고 주변을 보강한 교육용 배치입니다.',title:'본네트 아래 엔진룸',cam:[0,3.4,.4,39,-.22,.82]},
+bay:{visible:all,selected:'bay_upper_support',badge:'R6+ · 본네트 아래 구조와 정비 포인트',text:'전방 지지대, 탱크 주입구, 흡기 덕트, 배터리 단자와 배선을 관찰합니다. 원본 장치는 유지하고 주변을 보강한 교육용 배치입니다.',title:'본네트 아래 엔진룸',cam:[0,3.4,.4,39,-.22,.82]},
 full:{visible:all,selected:'block',badge:'R4 전체 차량 · V2 학습 기능 통합',text:'전체 차량에서 엔진·냉각·구동계로 이동해 동일한 모델의 구조와 작동 원리를 관찰합니다.',title:'차량 전체 구성',cam:[0,0,-15,75,-.60,.35]},
 overview:{visible:['engine','intake','ignition','cooling','lubrication','transmission','electrical'],selected:'block',badge:'엔진룸 · 파워트레인 구성',text:'R4의 상세 엔진·냉각 구조와 V2의 부품 설명을 한 모델에서 확인합니다.',title:'엔진룸 배치',cam:[-.3,.22,.2,14,-.49,.35]},
 internals:{visible:['engine'],selected:'piston1',badge:'4행정 · 크랭크–로드–피스톤 연결',text:'4행정은 크랭크축 2회전입니다. 피스톤·핀·링·로드는 같은 실린더의 운동을 공유합니다. 밸브 위상은 학습용 단순화입니다.',title:'엔진 기구학',cam:[0,.3,0,8.5,-.37,.26]},
@@ -139,14 +141,16 @@ drive:{visible:['engine','transmission','suspension','wheels'],selected:'planeta
 oil:{visible:['engine','lubrication'],selected:'oilpump',badge:'오일팬 → 펌프 → 필터 → 베어링',text:'V2의 윤활 학습 경로를 R4의 동일 엔진 좌표에 연결했습니다. 유량·압력은 계산하지 않습니다.',title:'윤활 경로',cam:[.2,-.25,0,10.5,-.37,.25]},
 ignition:{visible:['engine','ignition','intake'],selected:'coilmodule',badge:'V2 점화 학습 · 점화순서 1–3–4–2',text:'주황색 표시는 실린더별 연소 시점이며 실제 화염 해석은 아닙니다. 1~4번 실린더를 선택해 행정을 확인하세요.',title:'점화·연료분사',cam:[0,.56,0,10,-.42,.44]},
 chassis:{visible:['structure','suspension','steering','brakes','wheels','transmission','exhaust','fuel'],selected:'cvshaft',badge:'차체 하부 · 현가·조향·제동',text:'R4의 차체 골격과 전후 현가, 구동축, 조향·제동 부품의 배치를 살펴봅니다.',title:'차량 하부 구성',cam:[0,-1,-15,65,-.55,.30]},
-cabin:{visible:['structure','interior','hvac','steering','electrical'],selected:'battery',badge:'실내 · 공조 · 전장',text:'실내 공간과 공조·전장 부품의 개념 배치입니다. 국내 트림별 사양과 치수는 검증되지 않았습니다.',title:'실내 패키징',cam:[0,2,-18,52,-.6,.45]},
+cabin:{visible:['structure','interior','hvac','steering','electrical'],selected:'dashboard',badge:'실내 · 공조 · 전장',text:'실내 공간과 공조·전장 부품의 개념 배치입니다. 국내 트림별 사양과 치수는 검증되지 않았습니다.',title:'실내 패키징',cam:[0,1,-19,37,-.65,.65]},
 exterior:{visible:['body','wheels'],selected:'block',badge:'외장·유리 · 전체 패키징',text:'차량 외형의 단순화된 개념 형상입니다. 실제 크루즈 외장 면품질과 정확한 비례를 보증하지 않습니다.',title:'외장 패키징',cam:[0,0,-15,75,-.6,.3]}};
 const m=modes[name];if(!m)return;state.mode=name;if(name==='bay'){state.hoodOpen=true;state.ghost=false;$('#ghostToggle').checked=false;}$('#hoodBtn').textContent=state.hoodOpen?'본네트 닫기':'본네트 열기';state.hidden.clear();state.isolated=null;state.explode=0;$('#explodeSlider').value=0;$('#explodeValue').textContent='0%';state.visible=new Set(m.visible);state.target=m.cam.slice(0,3);state.dist=m.cam[3];state.az=m.cam[4];state.el=m.cam[5];document.querySelectorAll('.mode').forEach(b=>b.classList.toggle('active',b.dataset.mode===name));$('#stageBadge').innerHTML='<span class="pulse"></span> '+m.badge;$('#learnCard').innerHTML=`<span class="learn-no">01</span><b>${m.title}</b><p>${m.text}</p>`;refreshToggles();setSelected(m.selected);updatePartList();}
 function setupTags(){const labels={block:['실린더 블록',[0,.2,-.45]],turbo:['터보차저',[-.45,.75,-2]],radiator:['라디에이터',[0,.8,3.4]],gearbox:['6단 변속기',[-3.3,.35,0]],waterpump:['워터펌프',[2.9,-.5,.8]],oilpump:['오일펌프',[2.8,-.94,.34]],coilmodule:['점화 모듈',[0,2.95,0]]};const root=$('#tagLayer');for(const [id,[name,pos]] of Object.entries(labels)){let b=document.createElement('button');b.className='model-tag';b.textContent=name;b.onclick=()=>setSelected(id);b.dataset.id=id;b.dataset.pos=JSON.stringify(pos);root.appendChild(b);tagLinks.push(b)}}
 function updateTags(){for(const tag of tagLinks){const part=renderer.partById.get(tag.dataset.id);if(!part||!state.tags||['bay','full','chassis','cabin','exterior'].includes(state.mode)||!partVisible(part)){tag.style.display='none';continue}const pos=JSON.parse(tag.dataset.pos);const offset=part.explode.map(v=>v*state.explode*.014);const proj=renderer.project(vec3.add(pos,offset));if(!proj){tag.style.display='none';continue}tag.style.display='block';tag.style.left=proj[0]+'px';tag.style.top=proj[1]+'px';}}
 function updateCooling(dt){if(!model)return;if(state.coolingPlaying)coolingRotorAngle+=dt*2*Math.PI;for(const p of coolParticles){if(!state.coolingPlaying||routeWeight(p.name)<.001)continue;p.t=(p.t+dt*.6*routeWeight(p.name)/pathSample(p.path,0).length)%1;p.pos=pathSample(p.path,p.t).pos}if(state.playing)for(const p of oilParticles){p.t=(p.t+dt*.65*state.speed/pathSample(p.path,0).length)%1;p.pos=pathSample(p.path,p.t).pos}}
 function updateCycle(){let deg=((state.angle*180/Math.PI-model.kinematics.firingOffset[state.selectedCylinder])%720+720)%720;let idx=Math.min(3,Math.floor(deg/180));const stages=['동력 행정','배기 행정','흡입 행정','압축 행정'];$('#strokeName').textContent=stages[idx];$('#strokeName').style.color=strokeColors[idx];$('#angleValue').textContent=Math.round(deg)+'°';$('#globalAngle').textContent=Math.round(state.angle*180/Math.PI%720)+'°';$('#crankSlider').value=state.angle*180/Math.PI%720;$('#cylinderInfo').textContent=(state.selectedCylinder+1)+'번 실린더 · 상대 위상';$('#strokeProgress').style.left=(deg/720*100)+'%';}
-function wireEvents(){const canvas=$('#glcanvas');let moved=false,last=[0,0];
+function wireEvents(){
+ $('#rearFold').oninput=e=>{state.rearFold=Number(e.target.value)/100;$('#rearFoldValue').textContent=e.target.value+'%';};
+const canvas=$('#glcanvas');let moved=false,last=[0,0];
   canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);state.drag=e.button===2?'pan':'orbit';moved=false;last=[e.clientX,e.clientY];canvas.classList.add('dragging')});
   canvas.addEventListener('pointermove',e=>{if(!state.drag)return;const dx=e.clientX-last[0],dy=e.clientY-last[1];if(Math.abs(dx)+Math.abs(dy)>2)moved=true;
     if(state.drag==='orbit'){state.az-=dx*.007;state.el=clamp(state.el+dy*.007,-1.3,1.37)}
@@ -185,5 +189,7 @@ function wireEvents(){const canvas=$('#glcanvas');let moved=false,last=[0,0];
   window.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA'].includes(document.activeElement.tagName))return;if(e.code==='Space'){e.preventDefault();$('#playBtn').click()}else if(e.code==='KeyR')$('#resetViewBtn').click()});
 }
 function animate(timestamp){if(!renderer)return;const dt=Math.max(0,Math.min(.055,(timestamp-lastTime)/1000||0));lastTime=timestamp;if(state.playing)state.angle=(state.angle+dt*1.36*state.speed)%(Math.PI*4);updateCooling(dt);renderer.render();updateTags();updateCycle();requestAnimationFrame(animate)}
-async function boot(){try{model=await loadR4();renderer=new WebGLViewer($('#glcanvas'));renderer.upload(model);renderer.setupParticles();createToggles();setupTags();wireEvents();setMode('bay');$('#partCount').textContent=renderer.parts.length+' OBJECTS · R4+V2+R6';$('#gpuStatus').textContent='R6 · WEBGL 2';lastTime=performance.now();requestAnimationFrame(animate)}catch(e){console.error(e);$('#errorLayer').hidden=false;$('#errorMessage').textContent=e.message+' · start.bat으로 실행하거나 python -m http.server 8000을 사용해 주세요.';$('#gpuStatus').textContent='렌더러 오류';}}
+async function boot(){try{model=await loadR4();renderer=new WebGLViewer($('#glcanvas'));renderer.upload(model);renderer.setupParticles();createToggles();setupTags();wireEvents();setMode('bay');$('#partCount').textContent=renderer.parts.length+' OBJECTS · R4+V2+R6 PLUS';$('#gpuStatus').textContent='R6+ · WEBGL 2';lastTime=performance.now();requestAnimationFrame(animate)}catch(e){console.error(e);$('#errorLayer').hidden=false;$('#errorMessage').textContent=e.message+' · start.bat으로 실행하거나 python -m http.server 8000을 사용해 주세요.';$('#gpuStatus').textContent='렌더러 오류';}}
 boot();
+
+

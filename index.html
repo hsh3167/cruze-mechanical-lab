@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0b1320" />
-  <title>CRUZE Mechanical Lab · R6 통합 플랫폼</title>
+  <title>CRUZE Mechanical Lab · R6+ 통합 플랫폼</title>
   <link rel="stylesheet" href="style.css" />
-  <script type="module" src="app.js?r6=1"></script>
+  <script type="module" src="app.js?recovery=20261018"></script>
 </head>
 <body>
 <div id="app">
@@ -14,7 +14,7 @@
     <div class="brand-mark"><span class="mark">✳</span></div>
     <div class="head-titles">
       <div class="kicker">MECHANICAL EXPLORER <span class="pill minor">교육용 3D 모델</span></div>
-      <h1>CRUZE <span>1.4T</span> <small>MECHANICAL LAB <span class="v2chip">R6</span></small></h1>
+      <h1>CRUZE <span>1.4T</span> <small>MECHANICAL LAB <span class="v2chip">R6+</span></small></h1>
     </div>
     <div class="head-right"><span class="live-indicator"></span><span id="gpuStatus">WebGL 2 연결 중</span><button type="button" id="helpBtn" title="사용법">?</button></div>
   </header>
@@ -51,7 +51,7 @@
         <button id="coolingPlay" class="small-btn">냉각 순환 정지</button>
         <p class="muted" style="font-size:11px;line-height:1.6">0%는 바이패스, 100%는 라디에이터 주회로 표시입니다. 실제 유량·온도 계산 결과가 아닙니다.</p>
       </section>
-      <section class="side-section section-systems">
+      <section class="side-section"><div class="section-heading">실내 · 적재공간</div><label class="slice-header" for="rearFold">2열 등받이 폴딩 <span id="rearFoldValue">0%</span></label><input id="rearFold" type="range" min="0" max="100" value="0" /><p class="muted" style="font-size:11px">실내 모드에서 확인. 등받이와 헤드레스트가 함께 회전합니다. 60:40 분할·간섭·실차 힌지 위치는 미검증입니다.</p></section><section class="side-section section-systems">
         <div class="section-heading"><span>02</span> 계통 표시 <button id="allSystemsBtn" class="text-action">모두 켜기</button></div>
         <div id="systemList" class="system-list"></div>
       </section>
@@ -65,10 +65,10 @@
         <label class="switch-row"><span>부품 이름 태그<small>3D 부품 위치 표시</small></span><input id="tagsToggle" type="checkbox" checked /><i></i></label>
       </section>
       <section class="side-section slice-options"><label class="slice-header" for="sliceSlider">단면 위치 <span id="sliceValue">0%</span></label><input id="sliceSlider" type="range" min="-70" max="70" value="0" /><small>절개 스위치를 켠 뒤 앞뒤 단면 위치 조절</small></section>
-      <div class="accuracy-note"><b>R6 엔진룸 보강</b><br>본네트 아래의 패널·정비 포인트·덕트·배선을 추가했습니다. 형상과 경로는 교육용입니다.<br><a href="https://www.chevrolet.com/ownercenter/content/dam/gmownercenter/gmna/dynamic/manuals/2014/chevrolet/cruze/2014_chevrolet_cruze_owners.pdf" target="_blank" rel="noopener noreferrer">참고: Chevrolet 2014 매뉴얼 10-6~7</a><br><br><b>정확도 안내</b><br>OEM CAD가 아닌 교육용 개념 모델입니다. 실차 치수·접촉·유량·성능은 검증되지 않았습니다.<br><a href="cruze-full-r6.glb" download>R6 보강 모델 다운로드</a><br><a href="cruze-full-r4.glb" download>R4 원본 모델 다운로드</a> · <a href="integration-check.json">통합 검사</a></div>
+      <div class="accuracy-note"><b>R6+ 엔진룸 · 실내 보강</b><br>본네트 아래의 패널·정비 포인트·덕트·배선을 추가했습니다. 형상과 경로는 교육용입니다.<br><a href="https://www.chevrolet.com/ownercenter/content/dam/gmownercenter/gmna/dynamic/manuals/2014/chevrolet/cruze/2014_chevrolet_cruze_owners.pdf" target="_blank" rel="noopener noreferrer">참고: Chevrolet 2014 매뉴얼 10-6~7</a><br><br><b>정확도 안내</b><br>OEM CAD가 아닌 교육용 개념 모델입니다. 실차 치수·접촉·유량·성능은 검증되지 않았습니다.<br><a href="cruze-full-r6-plus.glb" download>R6+ 보강 모델 다운로드</a><br><a href="recovery-report.json">보강·검증 기록</a><br><a href="cruze-full-r6.glb" download>R6 보강 모델 다운로드</a><br><a href="cruze-full-r4.glb" download>R4 원본 모델 다운로드</a> · <a href="integration-check.json">통합 검사</a></div>
     </aside>
     <section class="main-stage" id="mainStage">
-      <div class="stage-top"><span class="stage-index">R6 ENGINE BAY · R4 + V2</span><div class="stage-tools"><button id="hoodBtn" class="small-btn">본네트 닫기</button><button id="resetViewBtn" class="small-btn">◎ 기본 시점</button><button id="topViewBtn" class="small-btn">⊞ 윗면</button></div></div>
+      <div class="stage-top"><span class="stage-index">R6+ ENGINE BAY · R4 + V2</span><div class="stage-tools"><button id="hoodBtn" class="small-btn">본네트 닫기</button><button id="resetViewBtn" class="small-btn">◎ 기본 시점</button><button id="topViewBtn" class="small-btn">⊞ 윗면</button></div></div>
       <canvas id="glcanvas" aria-label="자동차 엔진 3D 뷰어"></canvas>
       <div id="tagLayer"></div>
       <div class="view-help">드래그 회전 <span>·</span> 휠 확대 <span>·</span> 우클릭 이동 <span>·</span> 부품 클릭</div>

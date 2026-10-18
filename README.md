@@ -1,3 +1,15 @@
+# R6+ — Engine bay and cabin completion
+
+Live viewer: https://hsh3167.github.io/cruze-mechanical-lab/
+
+63 additional objects; 608 web display objects, 604 exported meshes, 17 systems. Preserves R6 and all R4/V2 features. Adds front cooling detail, latch and wiring, cabin/trunk trim and interactive rear seat folding. R10 was not recovered; this version is R6+.
+
+R6 backup branch: backup/r6-20261018 (original commit 42aa4fcbf43bba3c915eb141060dadb0e191258b). Original R4 and R6 GLBs remain available.
+
+Run npm test for all 10 checks. Run node export-plus.mjs to reproduce the new GLB. Rear folding is a viewer function; the download has the rear seat upright. See RECOVERY.md for scope and validation limitations.
+
+---
+
 # R6 — Engine bay expansion
 
 The R6 release adds 76 selectable engine-bay components to the intact R4 geometry and V2 learning features. The web platform displays 545 objects across 17 systems. It opens in the engine-bay view; the hood control opens/closes around its rear hinge. Added geometry is educational and schematic, not OEM dimensional CAD.
