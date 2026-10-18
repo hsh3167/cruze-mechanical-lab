@@ -1,3 +1,11 @@
+# R7 — Left-hand drive correction and cabin expansion
+
+R7 corrects the steering wheel, instruments, pedals and related brake components to the vehicle's left side. Adds 168 cabin and service-connection objects: 776 web objects, 772 exported meshes, 17 systems. Includes driver view, cabin top view and cabin shell visibility controls. Download: cruze-full-r7.glb.
+
+Validation: all 15 integration, recovery and R7 checks pass. Alignment comparisons allow 1e-5 model-unit floating-point tolerance. Rebuild with node export-r7.mjs. Run npm test; on hosts that restrict child processes, use node --input-type=module -e "await import('./integration.test.mjs'); await import('./recovery.test.mjs'); await import('./r7.test.mjs');".
+
+The model represents major cabin systems for education. It is not a complete OEM parts inventory or dimensionally validated manufacturing CAD. Original R4, R6 and R6+ downloads remain available.
+
 # R6+ — Engine bay and cabin completion
 
 Live viewer: https://hsh3167.github.io/cruze-mechanical-lab/

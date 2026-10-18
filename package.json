@@ -1,9 +1,10 @@
 {
   "name": "cruze-mechanical-lab",
   "private": true,
-  "version": "6.1.0",
+  "version": "7.0.0",
   "type": "module",
   "scripts": {
-    "test": "node --test --test-isolation=none integration.test.mjs recovery.test.mjs"
+    "test": "node --test integration.test.mjs recovery.test.mjs r7.test.mjs",
+    "export": "node export-r7.mjs"
   }
 }

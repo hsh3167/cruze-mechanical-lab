@@ -1,0 +1,69 @@
+{
+  "revision": "R7",
+  "vehicleFrame": {
+    "forward": [
+      0,
+      0,
+      1
+    ],
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "left": [
+      1,
+      0,
+      0
+    ],
+    "driverX": 4.4
+  },
+  "driver": "Left-hand drive; positive X when looking forward along +Z",
+  "addedParts": 168,
+  "correctedParts": [
+    "steering_wheel",
+    "steering_center",
+    "steering_column",
+    "steering_motor",
+    "instrument_cluster",
+    "pedal_accelerator",
+    "pedal_brake",
+    "brake_booster",
+    "master_cylinder",
+    "brake_reservoir",
+    "bay_brake_cap",
+    "plus_glovebox",
+    "plus_glovehandle",
+    "bcm",
+    "hvac_case",
+    "evaporator",
+    "heatercore",
+    "blower",
+    "bay_booster_vacuum",
+    "bay_latch_cable"
+  ],
+  "webObjects": 776,
+  "exportMeshes": 772,
+  "systems": 17,
+  "groups": {
+    "운전 조작계": 13,
+    "브레이크": 2,
+    "대시보드": 3,
+    "안전장치": 19,
+    "센터 스택": 3,
+    "센터 콘솔": 8,
+    "시트": 36,
+    "도어": 24,
+    "도어 내부 기구": 12,
+    "바닥·필러": 13,
+    "천장": 14,
+    "공조": 5,
+    "적재공간": 11,
+    "대시보드 내부": 1,
+    "전장": 4
+  },
+  "originalR4Sha256": "8dfbe7a1bc9f379064ab6e049bcffab1904a36127ff564765880e93d869bcb64",
+  "exportSha256": "370a683adaae7271b9c684e10d579b54029ca5854a404f7f0a09e3e988edd769",
+  "reference": "https://www.chevrolet.co.kr/owner-manuals/cruze",
+  "scope": "Major cabin systems, mechanisms and service connections represented. Educational component-level model; not a complete OEM BOM, validated trim specification, fastener inventory or manufacturing CAD. Airbags are stowed. Rear seat upright; hood open in GLB."
+}
