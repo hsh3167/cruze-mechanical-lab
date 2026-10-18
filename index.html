@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b1320" />
+  <title>CRUZE Mechanical Lab · R5 통합 플랫폼</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+<div id="app">
+  <header class="app-head">
+    <div class="brand-mark"><span class="mark">✳</span></div>
+    <div class="head-titles">
+      <div class="kicker">MECHANICAL EXPLORER <span class="pill minor">교육용 3D 모델</span></div>
+      <h1>CRUZE <span>1.4T</span> <small>MECHANICAL LAB <span class="v2chip">R5</span></small></h1>
+    </div>
+    <div class="head-right"><span class="live-indicator"></span><span id="gpuStatus">WebGL 2 연결 중</span><button type="button" id="helpBtn" title="사용법">?</button></div>
+  </header>
+  <main class="layout">
+    <aside class="left-panel">
+      <section class="intro">
+        <div class="eyebrow">2014 / CHEVROLET / KOREA</div>
+        <h2>한 대의 차량,<br><em>모든 계통을 한곳에서.</em></h2>
+        <p>R4의 전체 차량 모델과 V2의 엔진 학습 기능을 통합했습니다. 같은 조립체에서 구조와 작동 원리를 살펴보세요.</p>
+      </section>
+      <section class="side-section">
+        <div class="section-heading"><span>01</span> 탐험 모드</div>
+        <div class="mode-list" id="modeList">
+          <button data-mode="full" class="mode active"><span class="mode-icon">▱</span><span><b>전체 차량</b><small>R4 · 17개 계통 통합</small></span><span class="chev">↗</span></button>
+          <button data-mode="overview" class="mode"><span class="mode-icon">▣</span><span><b>엔진룸 전체</b><small>주요 부품 배치와 연결</small></span><span class="chev">↗</span></button>
+          <button data-mode="internals" class="mode"><span class="mode-icon">◉</span><span><b>엔진 내부</b><small>피스톤 · 크랭크 · 밸브</small></span><span class="chev">↗</span></button>
+          <button data-mode="cooling" class="mode"><span class="mode-icon">≈</span><span><b>냉각수 흐름</b><small>워터펌프 · 서모스탯</small></span><span class="chev">↗</span></button>
+          <button data-mode="pump" class="mode"><span class="mode-icon">◌</span><span><b>워터펌프 내부</b><small>임펠러 · 베어링 · 씰</small></span><span class="chev">↗</span></button>
+          <button data-mode="thermostat" class="mode"><span class="mode-icon">⌁</span><span><b>서모스탯 내부</b><small>밸브 · 왁스 캡슐 · 스프링</small></span><span class="chev">↗</span></button>
+          <button data-mode="turbo" class="mode"><span class="mode-icon">⇝</span><span><b>터보·흡배기</b><small>공기가 이동하는 경로</small></span><span class="chev">↗</span></button>
+          <button data-mode="oil" class="mode"><span class="mode-icon">◈</span><span><b>윤활·엔진오일</b><small>오일펌프 · 필터 · 베어링</small></span><span class="chev">↗</span></button>
+          <button data-mode="ignition" class="mode"><span class="mode-icon">✦</span><span><b>점화·연료공급</b><small>점화코일 · 플러그 · 인젝터</small></span><span class="chev">↗</span></button>
+          <button data-mode="drive" class="mode"><span class="mode-icon">⛭</span><span><b>변속기·구동</b><small>동력 전달 과정</small></span><span class="chev">↗</span></button>
+          <button data-mode="chassis" class="mode"><span class="mode-icon">⊞</span><span><b>차체·하부</b><small>현가 · 조향 · 제동 · 휠</small></span><span class="chev">↗</span></button>
+          <button data-mode="cabin" class="mode"><span class="mode-icon">▣</span><span><b>실내·공조·전장</b><small>공간과 부품 배치</small></span><span class="chev">↗</span></button>
+          <button data-mode="exterior" class="mode"><span class="mode-icon">◇</span><span><b>외장·유리</b><small>전체 패키징 개념</small></span><span class="chev">↗</span></button>
+        </div>
+      </section>
+      <section class="side-section">
+        <div class="section-heading">냉각계 작동</div>
+        <label class="slice-header" for="openingSlider">서모스탯 개도 <span id="openingValue">0%</span></label>
+        <input id="openingSlider" type="range" min="0" max="100" value="0" />
+        <button id="coolingPlay" class="small-btn">냉각 순환 정지</button>
+        <p class="muted" style="font-size:11px;line-height:1.6">0%는 바이패스, 100%는 라디에이터 주회로 표시입니다. 실제 유량·온도 계산 결과가 아닙니다.</p>
+      </section>
+      <section class="side-section section-systems">
+        <div class="section-heading"><span>02</span> 계통 표시 <button id="allSystemsBtn" class="text-action">모두 켜기</button></div>
+        <div id="systemList" class="system-list"></div>
+      </section>
+      <section class="side-section display-options">
+        <div class="section-heading"><span>03</span> 표시 설정</div>
+        <label class="switch-row"><span>외장 케이스 투명화<small>실린더·밸브 구조 관찰</small></span><input id="ghostToggle" type="checkbox" checked /><i></i></label>
+        <label class="switch-row"><span>차량 외장 표시<small>차체 패널 · 유리</small></span><input id="bodyToggle" type="checkbox" /><i></i></label>
+        <label class="switch-row"><span>냉각수 입자 표시<small>흐름 방향 개념 애니메이션</small></span><input id="flowToggle" type="checkbox" checked /><i></i></label>
+        <label class="switch-row"><span>오일 순환 입자<small>가압 공급 및 복귀 개념 경로</small></span><input id="oilToggle" type="checkbox" checked /><i></i></label>
+        <label class="switch-row"><span>엔진 케이스 절개<small>앞쪽 하우징 일부를 잘라 내부 관찰</small></span><input id="sectionToggle" type="checkbox" /><i></i></label>
+        <label class="switch-row"><span>부품 이름 태그<small>3D 부품 위치 표시</small></span><input id="tagsToggle" type="checkbox" checked /><i></i></label>
+      </section>
+      <section class="side-section slice-options"><label class="slice-header" for="sliceSlider">단면 위치 <span id="sliceValue">0%</span></label><input id="sliceSlider" type="range" min="-70" max="70" value="0" /><small>절개 스위치를 켠 뒤 앞뒤 단면 위치 조절</small></section>
+      <div class="accuracy-note"><b>정확도 안내</b><br>OEM CAD가 아닌 교육용 개념 모델입니다. 실차 치수·접촉·유량·성능은 검증되지 않았습니다.<br><a href="cruze-full-r4.glb" download>R4 원본 모델 다운로드</a> · <a href="integration-check.json">통합 검사</a></div>
+    </aside>
+    <section class="main-stage" id="mainStage">
+      <div class="stage-top"><span class="stage-index">R4 GEOMETRY + V2 LEARNING</span><div class="stage-tools"><button id="resetViewBtn" class="small-btn">◎ 기본 시점</button><button id="topViewBtn" class="small-btn">⊞ 윗면</button></div></div>
+      <canvas id="glcanvas" aria-label="자동차 엔진 3D 뷰어"></canvas>
+      <div id="tagLayer"></div>
+      <div class="view-help">드래그 회전 <span>·</span> 휠 확대 <span>·</span> 우클릭 이동 <span>·</span> 부품 클릭</div>
+      <div class="axis-indicator"><div class="axis-cross"><i class="axis-x">X</i><i class="axis-y">Y</i><i class="axis-z">Z</i></div><span>교육용 좌표계</span></div>
+      <div class="stage-badge" id="stageBadge"><span class="pulse"></span> 4행정 작동 준비</div>
+      <div class="err-layer" id="errorLayer" hidden><b>3D 뷰어 초기화 실패</b><p id="errorMessage"></p></div>
+    </section>
+    <aside class="right-panel">
+      <div class="right-heading"><span class="eyebrow">INSPECTOR</span><span id="partCount">— PARTS</span></div>
+      <div class="inspector-visual"><div class="outline-circle"><span>✳</span></div><small>PART ID <span id="partId">ENGINE-001</span></small></div>
+      <div class="part-category" id="partSystem">엔진 구조</div>
+      <h2 id="partTitle">4기통 터보 엔진</h2>
+      <p id="partDesc">왼쪽 탐험 모드를 선택하거나 3D 부품을 클릭하여 내부 구조와 역할을 살펴보세요.</p>
+      <div class="row" style="display:flex;gap:6px;flex-wrap:wrap"><button id="hidePart" class="small-btn">선택 숨김</button><button id="isolatePart" class="small-btn">단독 보기</button><button id="restoreParts" class="small-btn">표시 복원</button></div>
+      <div class="separator"></div>
+      <div class="section-heading">실린더별 행정 관찰</div>
+      <div class="cylinder-control"><button class="active" data-cylinder="1">1</button><button data-cylinder="2">2</button><button data-cylinder="3">3</button><button data-cylinder="4">4</button></div>
+      <div id="cylinderInfo" class="cylinder-info">1번 실린더 · 상대 위상</div>
+      <label class="slice-header" for="crankSlider">크랭크 각도 <span id="globalAngle">0°</span></label><input id="crankSlider" type="range" min="0" max="720" value="0" />
+      <div class="section-heading">현재 학습 포인트</div>
+      <div class="learn-card" id="learnCard"><span class="learn-no">01</span><b>엔진 기구학</b><p>크랭크축은 피스톤의 왕복운동을 회전으로 바꿉니다. 4행정 사이클에는 크랭크축이 2회전합니다.</p></div>
+      <div class="section-heading part-list-title">부품 찾기 <span id="visibleCount"></span></div>
+      <input id="searchParts" type="search" placeholder="피스톤, 워터펌프, 터보..." autocomplete="off" aria-label="부품 검색"/>
+      <div class="part-list" id="partList"></div>
+      <a class="source-link" href="https://partsouq.com/en/catalog/genuine/parts?c=GM_C201809&gid=211&vid=883344295" target="_blank" rel="noopener noreferrer">참고: GM 부품 카탈로그 ↗</a>
+    </aside>
+  </main>
+  <footer class="control-deck">
+    <div class="control-group motion-group">
+      <div class="control-caption">ENGINE CYCLE <span>720° / 4-STROKE</span></div>
+      <div class="transport"><button id="playBtn" class="play-btn" title="재생/일시정지">▶</button><div class="stroke-block"><div class="stroke-title"><b id="strokeName">동력 행정</b><span id="angleValue">0°</span></div><div class="stroke-bar"><i id="strokeProgress"></i></div><div class="stroke-labels"><span>동력</span><span>배기</span><span>흡입</span><span>압축</span></div></div></div>
+    </div>
+    <div class="control-group speed-group"><label for="speedSlider">애니메이션 속도 <span id="speedValue">1.0×</span></label><input id="speedSlider" type="range" min="0" max="250" value="100"/><small>학습용 속도 · 실제 엔진 RPM 아님</small></div>
+    <div class="control-group explode-group"><label for="explodeSlider">분해 보기 <span id="explodeValue">0%</span></label><input id="explodeSlider" type="range" min="0" max="100" value="0"/><div class="range-label"><span>조립</span><span>분해</span></div></div>
+    <div class="deck-buttons"><button id="stepBtn" title="30도 진행">+30°</button><button id="resetAnimBtn" title="0도 초기화">↺</button></div>
+  </footer>
+</div>
+<dialog id="helpDialog"><div class="dialog-top"><h2>조작 가이드</h2><button id="closeHelp">✕</button></div><p><b>마우스 왼쪽 드래그:</b> 회전 / <b>휠:</b> 확대·축소 / <b>오른쪽 드래그:</b> 카메라 이동 / <b>부품 클릭:</b> 해당 부품 설명.</p><p>왼쪽에서 탐험 모드를 바꾸면 필요한 계통을 강조합니다. 하단에서 4행정 애니메이션과 분해 거리를 조절할 수 있습니다.</p><p>본 모델은 국내 2014 크루즈 1.4T 자료를 참고하되, 치수와 세부 형상은 임의로 단순화한 <b>작동 원리 학습용 모델</b>입니다.</p><button id="okHelp" class="primary-dialog">확인</button></dialog>
+</body>
+</html>

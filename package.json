@@ -1,0 +1,7 @@
+{
+  "name": "cruze-mechanical-lab",
+  "private": true,
+  "version": "5.0.0",
+  "type": "module",
+  "scripts": {"test": "node --test --test-isolation=none integration.test.mjs"}
+}

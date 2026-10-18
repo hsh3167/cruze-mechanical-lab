@@ -1,0 +1,2 @@
+export function pistonPose(k,index,angle){const phase=angle+k.phase[index]*Math.PI/180,cy=k.crankY+k.crankRadius*Math.cos(phase),cz=k.crankRadius*Math.sin(phase);return {cy,cz,py:cy+Math.sqrt(k.conrod*k.conrod-cz*cz)}}
+export function valveLift(k,index,angle,side){const cycle=((angle*180/Math.PI-k.firingOffset[index])%720+720)%720,[start,end]=side==='intake'?[355,545]:[175,365];return cycle>start&&cycle<end?.13*Math.pow(Math.sin(Math.PI*(cycle-start)/(end-start)),.8):0}
