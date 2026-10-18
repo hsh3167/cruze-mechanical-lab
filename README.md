@@ -1,3 +1,21 @@
+# R6 — Engine bay expansion
+
+The R6 release adds 76 selectable engine-bay components to the intact R4 geometry and V2 learning features. The web platform displays 545 objects across 17 systems. It opens in the engine-bay view; the hood control opens/closes around its rear hinge. Added geometry is educational and schematic, not OEM dimensional CAD.
+
+Additions include the radiator supports and fan shroud, firewall/cowl, side aprons and strut-tower panels, headlamp backs, hood reinforcement and prop, washer tank/filler/cap, oil/coolant/brake caps, battery tray/terminals/cables, air inlet duct, ECU connections, ABS pipes and wiring detail. Existing battery, airbox, radiator, condenser and major assemblies are retained without duplicates.
+
+Reference for service-point component types: Chevrolet 2014 Cruze Owner Manual, 1.4L L4 Engine, pages 10-6 and 10-7. This North American reference does not validate Korean equipment, dimensions or routing.
+https://www.chevrolet.com/ownercenter/content/dam/gmownercenter/gmna/dynamic/manuals/2014/chevrolet/cruze/2014_chevrolet_cruze_owners.pdf
+
+- `engine-bay.js`: reproducible component geometry and labels.
+- `export-r6.mjs`: exports `cruze-full-r6.glb` and updates the integration manifest. The exchange model has 541 meshes with the hood open; four V2 combustion effects are web-only.
+- `cruze-full-r4.glb`: unchanged original archive.
+- `node export-r6.mjs` to rebuild the exchange model.
+- `npm test` runs 8 integration checks, including original geometry preservation and hood transform checks.
+
+The older Python generators below are retained as R5 history. They overwrite viewer or manifest files and should not be run over R6 without reapplying the R6 changes.
+
+---
 # Cruze Mechanical Lab — R5
 
 2014 Chevrolet Cruze 1.4T의 전체 차량 구조와 엔진 작동을 살펴보는 웹 플랫폼입니다.

@@ -20,3 +20,5 @@ dialog{max-width:480px;width:calc(100% - 32px);background:#101e2e;color:#dfebf4;
 .cylinder-control button{padding:8px 0;border-radius:6px;background:#192e42;color:#96bbcf;border:1px solid #32495f;font-size:12px;font-weight:800}
 .cylinder-control button.active,.cylinder-control button:hover{background:#206c82;color:white;border-color:#4bc8d4}
 .cylinder-info{font-size:9px;color:#6ac8d4;margin:0 0 21px;letter-spacing:.04em}
+
+.stage-tools{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end} #hoodBtn{color:#91e0d5;border-color:#387e7c} .stage-index{max-width:46%;line-height:1.5}

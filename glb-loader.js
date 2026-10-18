@@ -1,3 +1,4 @@
+import {buildEngineBay} from './engine-bay.js';
 // Minimal GLB 2.0 triangle reader for this project's uncompressed R4 asset.
 // No network dependencies. Original GLB remains the canonical geometry.
 export function parseGLB(buffer) {
@@ -28,5 +29,6 @@ export function parseGLB(buffer) {
 export async function loadR4(){const [modelResponse,infoResponse]=await Promise.all([fetch('./cruze-full-r4.glb'),fetch('./learning.json')]);if(!modelResponse.ok||!infoResponse.ok)throw Error('R4 모델 또는 학습 자료를 불러오지 못했습니다.');const model=parseGLB(await modelResponse.arrayBuffer()),info=await infoResponse.json();
   for(const part of model.parts){const details=info.descriptions[part.id]||{},u=part.meta;part.name=u.label||details.name||part.id;part.system=u.system||'engine';part.category=info.systemLabels[part.system]||part.system;part.description=details.description||`${part.name}. R4의 ${part.category} 개념 형상입니다. 실차 치수·장착점은 검증되지 않았습니다.`;part.explode=info.explode[part.system]||[0,0,0];part.ghost=['block','head','valvecover','oilpan','gearbox','liners'].includes(part.id)||!!u.coolingShell;part.opacity=part.ghost?.18:part.opacity;part.anim={kind:'world',...u};}
   for(const extra of info.combustion){extra.system='ignition';extra.meta={source:'v2-learning'};model.parts.push(extra)}
-  return {...info,...model,version:'R5-unified',systems:Object.keys(info.systemLabels)};
+  model.parts.push(...buildEngineBay());
+  return {...info,...model,version:'R6-engine-bay',systems:Object.keys(info.systemLabels)};
 }

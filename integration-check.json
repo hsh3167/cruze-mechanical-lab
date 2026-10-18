@@ -1,8 +1,13 @@
 {
+  "revision": "R6",
   "r4_meshes": 465,
   "v2_effects": 4,
-  "total_display_objects": 469,
+  "r6_additions": 76,
+  "total_display_objects": 545,
+  "export_meshes": 541,
   "systems": 17,
   "cooling_paths": 19,
-  "original_r4_sha256": "8dfbe7a1bc9f379064ab6e049bcffab1904a36127ff564765880e93d869bcb64"
+  "original_r4_sha256": "8dfbe7a1bc9f379064ab6e049bcffab1904a36127ff564765880e93d869bcb64",
+  "reference": "https://www.chevrolet.com/ownercenter/content/dam/gmownercenter/gmna/dynamic/manuals/2014/chevrolet/cruze/2014_chevrolet_cruze_owners.pdf",
+  "accuracy": "Educational geometry; dimensions, equipment variants and routing are not OEM-validated."
 }
