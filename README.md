@@ -1,3 +1,18 @@
+# R10.1 — 작동 검증과 재현 가능한 검사
+
+최신 기준: R10 `cc01372`. 기존 모델 884개 표시 객체·880개 GLB 메시·17개 계통과 이전 버전 파일을 유지합니다. R4~R10 GLB 7개의 SHA-256을 `archive-sha256.json`으로 고정했습니다. 아래 R5~R10 기록은 당시 이력입니다.
+
+화면과 검사가 같은 Float32 변환 함수를 사용합니다. 조향·현가 117개 조합, 도어·유리 121개 조합, 정비 분해 68개 상태에서 모든 해당 꼭짓점의 유한성, 변환의 뒤집힘·특이성, 링크 양 끝·스프링 상단·도어 힌지 기준점을 검사합니다. 유리 하강 후 도어 회전 순서도 검증합니다. 연속 충돌·실차 하중 인증은 아닙니다.
+
+- [작동 검증](https://hsh3167.github.io/cruze-mechanical-lab/motion-audit.html) · [3D 뷰어](https://hsh3167.github.io/cruze-mechanical-lab/?view=suspension) · [OEM 대조](https://hsh3167.github.io/cruze-mechanical-lab/audit.html)
+- `npm test`: 기존 35개 + 작동 3개 검사.
+- `npm run verify`: 전체 검사, 이전 GLB 해시 확인, `motion-audit-r10.json`과 `release-validation.json` 생성. 실패 시 이전 통과 기록을 무효화합니다. 검사 기록에는 입력 파일 해시가 포함됩니다.
+- `npm run export`: R10 내보내기와 OEM 대조 후 위 검사를 자동 실행합니다. 생성기가 다시 쓰는 `r10-report.json`의 과거 수동 검사 필드 대신 별도 검사 기록을 확인합니다.
+
+국내 VIN/RPO 적용·전체 OEM BOM·실측 장착점·정밀 연속 충돌·체결 토크·하중·실차 정비 순서는 여전히 미검증입니다. 205/60R16은 기존 기준 가정입니다.
+
+---
+
 # R9 — Internal components and surface refinement
 
 Live inspection: https://hsh3167.github.io/cruze-mechanical-lab/?view=cabin

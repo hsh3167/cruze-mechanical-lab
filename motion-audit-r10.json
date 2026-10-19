@@ -1,0 +1,33 @@
+{
+  "revision": "R10.1",
+  "baseline": "R10",
+  "method": "Sampled rendered Float32 affine transforms and every vertex; not a collision test",
+  "groups": [
+    {
+      "name": "steering-suspension",
+      "states": 117,
+      "partPoses": 13104
+    },
+    {
+      "name": "doors-windows",
+      "states": 121,
+      "partPoses": 9196
+    },
+    {
+      "name": "service-stages",
+      "states": 68,
+      "partPoses": 4369
+    }
+  ],
+  "partPoses": 26669,
+  "transformedVertices": 14876804,
+  "maxAnchorErrorMM": 0.00009647025163817663,
+  "toleranceMM": 0.01,
+  "passed": true,
+  "failures": [],
+  "remaining": [
+    "Continuous swept-volume and triangle collision detection",
+    "Real vehicle mounting coordinates, steering geometry and loads",
+    "Korean VIN/RPO fitment, complete BOM and service certification"
+  ]
+}

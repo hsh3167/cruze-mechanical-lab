@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>R10.1 작동 검증 · Cruze Mechanical Lab</title>
+<style>body{margin:0;background:#0c1521;color:#dce7ee;font:16px/1.8 system-ui}main{max-width:900px;margin:40px auto;padding:24px}a{color:#7cdbdf}nav{display:flex;gap:24px;flex-wrap:wrap}h1{font-size:36px}article{background:#152333;padding:20px;border-radius:12px;margin:24px 0}table{border-collapse:collapse;width:100%}td,th{padding:12px;text-align:left;border-bottom:1px solid #304354}.muted{color:#a0b5c7}code{overflow-wrap:anywhere}a:focus-visible{outline:2px solid #7cdbdf}@media(max-width:600px){main{margin:10px auto}h1{font-size:28px}td,th{padding:8px;font-size:14px}}</style>
+<main><nav><a href="index.html?view=suspension">← 3D 작동 보기</a><a href="audit.html">실차·OEM 대조</a><a href="release-validation.json">전체 검사 기록</a></nav>
+<p class="muted">R10.1 · R10 모델 유지</p><h1>작동 범위를 수치로 확인합니다.</h1>
+<p>화면에서 사용하는 변환 함수로 조향·현가, 도어·유리와 4개 분해 보기의 표본 상태를 검사했습니다. 각 부품의 모든 꼭짓점, 변환의 유한성, 뒤집힘과 연결 기준점의 오차를 확인합니다.</p>
+<article id="summary" role="status">검사 기록을 불러오는 중…</article>
+<table><caption>검사한 상태와 부품 변환 수</caption><thead><tr><th scope="col">대상</th><th scope="col">상태 조합</th><th scope="col">부품 변환</th></tr></thead><tbody id="groups"></tbody></table>
+<p>조향은 −30°~30°를 5° 간격, 현가는 −40~40mm를 10mm 간격으로 조합합니다. 문 열림과 유리 하강은 각각 0~100%를 10% 간격으로 조합합니다. 정비 분해는 각 보기에서 0~100%를 6.25% 간격으로 확인합니다.</p>
+<h2>아직 검증하지 않은 항목</h2><p>표본 사이의 연속 운동, 메시 삼각형 간 충돌, 실차 하중과 간섭은 검사하지 않았습니다. 연결 오차는 모델의 변환 연산 오차이며 실차 장착 정확도가 아닙니다. 국내 VIN/RPO별 적용, 전체 OEM 부품표, 정비 순서와 체결 토크는 여전히 미검증입니다.</p>
+<p class="muted">기존 엔진 학습, 냉각 순환, 본네트·뒷좌석 동작과 R4~R10 다운로드를 유지합니다. <a href="motion-audit-r10.json">작동 표본 검사 JSON</a></p></main>
+<script type="module">
+const summary=document.querySelector('#summary');
+try{const response=await fetch('./release-validation.json');if(!response.ok)throw Error('검사 기록을 찾을 수 없습니다.');const r=await response.json();if(!r.passed)throw Error('현재 검사 기록이 통과 상태가 아닙니다.');
+ summary.textContent=`검사 ${r.testsPassed}개 통과 · GLB ${r.archivesPreserved}개 보존 · ${r.motion.partPoses.toLocaleString()}개 부품 변환 / ${r.motion.transformedVertices.toLocaleString()}개 꼭짓점 검사. 최대 기준점 오차 ${r.motion.maxAnchorErrorMM.toFixed(6)}mm (허용 ${r.motion.toleranceMM}mm). 기록 시각 ${new Date(r.checkedAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})} KST.`;
+ const labels={'steering-suspension':'조향·현가','doors-windows':'도어·유리','service-stages':'4개 정비 분해'};
+ for(const g of r.motion.groups){const row=document.createElement('tr');for(const value of [labels[g.name]||g.name,g.states,g.partPoses.toLocaleString()]){const td=document.createElement('td');td.textContent=value;row.append(td);}document.querySelector('#groups').append(row);}
+}catch(e){summary.textContent=e.message;}
+</script></html>

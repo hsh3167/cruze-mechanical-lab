@@ -1,0 +1,86 @@
+{
+  "revision": "R10.1",
+  "baseline": "cc01372d586384d47ce292ec4094020976cefe5c",
+  "checkedAt": "2026-10-19T13:09:47.385Z",
+  "passed": true,
+  "testsPassed": 38,
+  "archivesPreserved": 7,
+  "motion": {
+    "revision": "R10.1",
+    "baseline": "R10",
+    "method": "Sampled rendered Float32 affine transforms and every vertex; not a collision test",
+    "groups": [
+      {
+        "name": "steering-suspension",
+        "states": 117,
+        "partPoses": 13104
+      },
+      {
+        "name": "doors-windows",
+        "states": 121,
+        "partPoses": 9196
+      },
+      {
+        "name": "service-stages",
+        "states": 68,
+        "partPoses": 4369
+      }
+    ],
+    "partPoses": 26669,
+    "transformedVertices": 14876804,
+    "maxAnchorErrorMM": 0.00009647025163817663,
+    "toleranceMM": 0.01,
+    "passed": true,
+    "failures": [],
+    "remaining": [
+      "Continuous swept-volume and triangle collision detection",
+      "Real vehicle mounting coordinates, steering geometry and loads",
+      "Korean VIN/RPO fitment, complete BOM and service certification"
+    ]
+  },
+  "sha256": {
+    "app.js": "397ecfa9de5d2a2150daa7f23a689f579d2ccb6c6cb3987903792f7fa88bf3d3",
+    "archive-sha256.json": "e03d983506220dd36407971223e5742f3487dc106d26f8bc862239194893ff8d",
+    "audit-r10.mjs": "d712ab99c7eba9d51f9543626055e677b9a6427f0322182fb989da58ead5260e",
+    "audit.html": "53a019361e8d1a296f345f7bdc7bab9e431d87ca99312bd84410fada8bccef3c",
+    "cabin-r7.js": "233f549a9c8ef42ddcb9d0989d192b5d2df9f7d3d27e8ea4689f63e9bcb2a449",
+    "chassis-r8.js": "2752e9cb4120c526af278eb00efb6cfbf3cd09815b1f6154142b7866933bea78",
+    "cruze-full-r10.glb": "cfc3155f20d50857316fe8e2e16654c3a777510d55fc03ca7b2bb60f6275f828",
+    "cruze-full-r4.glb": "8dfbe7a1bc9f379064ab6e049bcffab1904a36127ff564765880e93d869bcb64",
+    "cruze-full-r6-plus.glb": "6019b26eb97450812c2caa8209183c4ea7a9266b960d6c72baeb787b2cfbd949",
+    "cruze-full-r6.glb": "51a8f788db5fffda73ec76e77dd4df1e3128a68c101f53de37182c63d1b4f76d",
+    "cruze-full-r7.glb": "370a683adaae7271b9c684e10d579b54029ca5854a404f7f0a09e3e988edd769",
+    "cruze-full-r8.glb": "a94eab976d85d7bba279c1977c670b57b0a2058a9561cfd742e0854dcb4e4006",
+    "cruze-full-r9.glb": "9144c8ef7eeb52260d439af2d709f3cac6911f16df72885f5c8df227b5ee7f71",
+    "engine-bay.js": "c6ba1aee8ab0fa415834e298755bf3a5663cc356fcaf2ae293c3785a24c73e0d",
+    "export-plus.mjs": "41240028e614ce2a6a7939c4dab8b92a32984a87feef0ab1e50dd28f9446b028",
+    "export-r10.mjs": "de30382a6d7ba2a87ad540b7d1819cf49cb10283b30a81d029febd7b69cfc732",
+    "export-r6.mjs": "ea1eace4c326aea2efd93ddf5809cbef4b875b93ecab91ded38abc7a92aac3ed",
+    "export-r7.mjs": "16d4b6bd1ee87b2fbae3636ac34e3d58ecc64d3e88c2668e2a6798c432e488b3",
+    "export-r8.mjs": "fbcbdeb19c1c7f1c7bf1baffcaff1487a2357c9fd1acc31913c2a600f49eb2a8",
+    "export-r9.mjs": "f9ac6ade58e7765f10f53e75d58247026eedde6d51248cbed048031ad1e22d46",
+    "glb-loader.js": "f9738b924ef9f868b1f98ef008084581d9a2a1600c39f0cecf06d363a03468ca",
+    "index.html": "9dff941a844d9f2cd8f990c206d52523557f0a856dc97434dd8d62ad2c6d179a",
+    "integration.test.mjs": "2cdc91fb2409e136ccdb0ab41600fa82ddc637c3e76cc7d236f2dbf580898445",
+    "internals-r9.js": "6160a1a2e07501bef81d22a83f0b7cb39691331cbb34c173fc1ccd8f17ea2532",
+    "learning.json": "28e3fe07e7c29a4a377b8c13b45fbe5734e97c5a1db6427cc865814fd83172cf",
+    "mechanics.js": "b337bd9a0e0d2f4ab40d9702c1661a8709400827e4a5188095f5949c4d616774",
+    "motion-audit.html": "13e5be5df6871c0d9fbe4194adbeb326e94653d212ecb92f7e240f18ea70658c",
+    "motion-audit.mjs": "d022cc650e8b76aa43a0cf34eb1f5e94c692f979ae415130753a762eb6f66ab5",
+    "motion-matrix.js": "594b48d565d7561cc08ea67a7fa32d1e9c70610fab1967889579ee53c40ae0bc",
+    "motion.test.mjs": "b6899db6a5e6d7f84d90ba3886884dbca06fb572e11305a7e35a2b9a6b4a8650",
+    "oem-audit-r10.json": "3376baee8a5bd9269a9830e34b9f188e6ba8ec16593103e833add5277db186a1",
+    "package.json": "1213884f226cff94e18ca9376cedfbfb77fd236939af0c33e83abd1fff5991d7",
+    "r10-report.json": "2f1c0ed414162ed9aa39c262a76fbfa358a64b90df5b7b95f1bf329d43edca63",
+    "r10.test.mjs": "803aa875af6cb13792080e1022a794d0cf4b7d68ebab28c000be173d98ac3421",
+    "r7.test.mjs": "884a301609e0dd090473c4439816b670afcafcd55c409076dabcc1818420548a",
+    "r8.test.mjs": "b463c4f22ea8472d88cd45b488ede5a6120e4488bd19ed2ebf228abc80601357",
+    "r9.test.mjs": "7011a4c869dae423407ccd76c8857f80316026653bdbbce69cfc5ddfd74c7077",
+    "recovery-details.js": "f7d8f45896ea4c1ca3413fefd38beac2ed7ae062a186f0b3e3cf3d468a7d2cca",
+    "recovery.test.mjs": "40b4c3ae97be0ee969a7e8cd9ff20c10fdbfa5e992273c673f081822a694ee7e",
+    "refinement-r10.js": "10a231ecc4790ce241f79e40914c841619e58f4a59b519a873526bc5eeaacf78",
+    "style.css": "643a1aba01cce56a605e6c228791b80cc3849a2d07468abb5eac67d742529cb4",
+    "v2-viewer-source.js": "68709ef9b62b37d1a5cb04265326ca47a8c38086edd63a3dc9336a42da396eb7",
+    "verify-release.mjs": "93161f95e44efb3c35196c84f5fa64ad6863817095ea9d92f047eabb0b684b55"
+  }
+}

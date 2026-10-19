@@ -1,3 +1,4 @@
+import {motionMatrix} from './motion-matrix.js';
 import {SERVICES,motionDescriptor,serviceOffset,DIMENSIONS} from './refinement-r10.js';
 import {REAR_PIVOT} from './recovery-details.js';
 import {HOOD_PIVOT} from './engine-bay.js';
@@ -105,7 +106,7 @@ class WebGLViewer {
    if(part.id==='hood'||u.hoodAttached)pose=pivotRotate(HOOD_PIVOT,state.hoodOpen?-65*Math.PI/180:0);
    if(part.meta?.rearFoldAttached||part.id==='rear_seat_back'||part.id.startsWith('rear_headrest_'))pose=pivotRotate(REAR_PIVOT,Math.PI*.46*state.rearFold);
    if(a.kind==='combustion'){const deg=((angle*180/Math.PI-k.firingOffset[a.index])%720+720)%720;part.dynamicAlpha=state.mode==='ignition'&&deg<75?.64*Math.pow(Math.sin(Math.PI*deg/75),.75):0}
-   for(const op of motionDescriptor(part,state)){let m=mat.id();if(op.kind==='translate')m=mat.trans(...op.value);else if(op.kind==='scaleY'){m[5]=op.scale;m=mat.mul(mat.trans(...op.pivot),mat.mul(m,mat.trans(...op.pivot.map(v=>-v))));}else if(op.kind==='link'){const v=op.to.map((x,i)=>x-op.from[i]),d=op.target.map((x,i)=>x-op.to[i]),len=v.reduce((s,x)=>s+x*x,0);for(let col=0;col<3;col++)for(let row=0;row<3;row++)m[row+col*4]+=d[row]*v[col]/len;const q=mat.point(m,op.from);m[12]=op.from[0]-q[0];m[13]=op.from[1]-q[1];m[14]=op.from[2]-q[2];}else{m=op.kind==='rotateY'?mat.ry(op.angle):mat.rz(op.angle);m=mat.mul(mat.trans(...op.pivot),mat.mul(m,mat.trans(...op.pivot.map(v=>-v))));}pose=mat.mul(m,pose);}
+   pose=motionMatrix(motionDescriptor(part,state),pose);
    const service=serviceOffset(part,state.service,state.serviceProgress);pose=mat.mul(mat.trans(...service),pose);
    const ex=(['pump','thermostat'].includes(state.mode)&&u.explodeOffset?u.explodeOffset:part.explode).map(v=>v*state.explode*.014);part.model=mat.mul(mat.trans(...ex),pose);
   }
