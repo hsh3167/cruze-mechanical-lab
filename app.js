@@ -1,6 +1,6 @@
 import {REAR_PIVOT} from './recovery-details.js';
 import {HOOD_PIVOT} from './engine-bay.js';
-import {loadR4} from './glb-loader.js?r8=20261019';
+import {loadR4} from './glb-loader.js?r9=20261019';
 import {pistonPose,valveLift} from './mechanics.js';
 'use strict';
 /* Portable, standalone WebGL2 renderer. There are no external JS/CDN dependencies.
@@ -25,7 +25,7 @@ const mat={
   lookAt:(eye,target)=>{const z=vec3.norm(vec3.sub(eye,target)),x=vec3.norm(vec3.cross([0,1,0],z)),y=vec3.cross(z,x);return new Float32Array([x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,-vec3.dot(x,eye),-vec3.dot(y,eye),-vec3.dot(z,eye),1])},
   point:(m,v)=>[m[0]*v[0]+m[4]*v[1]+m[8]*v[2]+m[12],m[1]*v[0]+m[5]*v[1]+m[9]*v[2]+m[13],m[2]*v[0]+m[6]*v[1]+m[10]*v[2]+m[14]]
 };
-function partVisible(p){if(state.mode==='suspension'&&/^(steering_wheel$|steering_center$|steering_column$|brake_booster$|master_cylinder$|brake_reservoir$|brakeline_|bay_brake_cap$|bay_booster_vacuum$|r7_master_abs_lines$|r7_booster_pushrod$|r7_handbrake_cables$)/.test(p.id))return false;if(state.mode==='cabin'&&state.cabinCutaway&&(p.meta?.roofTrim||/^(plus_door_trim_|r7_rear_door_trim_|r7_carpet$)/.test(p.id)))return false;if(state.mode==='cabin'&&p.meta?.engineBay)return false;if(!state.visible.has(p.system)||state.hidden.has(p.id)||(state.isolated&&state.isolated!==p.id))return false;
+function partVisible(p){if(state.mode==='hvacdetail'&&!(p.meta?.r9Group==='공조'||['hvac_case','evaporator','heatercore','blower','r7_cabin_filter','r7_blower_duct','r7_defrost_duct'].includes(p.id)))return false;if(state.mode==='cabin'&&state.cabinCutaway&&p.id.startsWith('r9_door_water_'))return false;if(state.mode==='suspension'&&/^(steering_wheel$|steering_center$|steering_column$|brake_booster$|master_cylinder$|brake_reservoir$|brakeline_|bay_brake_cap$|bay_booster_vacuum$|r7_master_abs_lines$|r7_booster_pushrod$|r7_handbrake_cables$)/.test(p.id))return false;if(state.mode==='cabin'&&state.cabinCutaway&&(p.meta?.roofTrim||/^(plus_door_trim_|r7_rear_door_trim_|r7_carpet$)/.test(p.id)))return false;if(state.mode==='cabin'&&p.meta?.engineBay)return false;if(!state.visible.has(p.system)||state.hidden.has(p.id)||(state.isolated&&state.isolated!==p.id))return false;
  if(p.meta?.hoodProp&&(!state.hoodOpen||(!state.showBody&&state.mode!=='bay')))return false;
  if(p.meta?.hoodAttached&&!state.showBody&&!['bay','exterior'].includes(state.mode))return false;
  if(state.mode==='bay'){
@@ -129,7 +129,7 @@ function refreshToggles(){document.querySelectorAll('.system-toggle').forEach(b=
 function setSelected(id){const p=renderer.partById.get(id);if(!p)return;state.selected=id;$('#partSystem').textContent=p.category;$('#partTitle').textContent=p.name;$('#partDesc').textContent=p.description;$('#partId').textContent=id.toUpperCase();updatePartList()}
 function updatePartList(){if(!renderer)return;const query=$('#searchParts').value.toLowerCase().trim();const valid=renderer.parts.filter(p=>partVisible(p)&&(!query||(p.name+p.description+p.category).toLowerCase().includes(query)));$('#visibleCount').textContent=valid.length+'개';const root=$('#partList');root.innerHTML='';for(const p of valid){const btn=document.createElement('button');btn.className='part-item'+(p.id===state.selected?' selected':'');btn.style.setProperty('--swatch',p.color);btn.innerHTML=`<span>${p.name}</span><small>↗</small>`;btn.onclick=()=>setSelected(p.id);root.appendChild(btn)}}
 function setMode(name){const all=Object.keys(sysColors);const modes={
-bay:{visible:all,selected:'bay_upper_support',badge:'R8 · 본네트 아래 구조와 정비 포인트',text:'전방 지지대, 탱크 주입구, 흡기 덕트, 배터리 단자와 배선을 관찰합니다. 원본 장치는 유지하고 주변을 보강한 교육용 배치입니다.',title:'본네트 아래 엔진룸',cam:[0,3.4,.4,39,-.22,.82]},
+bay:{visible:all,selected:'bay_upper_support',badge:'R9 · 본네트 아래 구조와 정비 포인트',text:'전방 지지대, 탱크 주입구, 흡기 덕트, 배터리 단자와 배선을 관찰합니다. 원본 장치는 유지하고 주변을 보강한 교육용 배치입니다.',title:'본네트 아래 엔진룸',cam:[0,3.4,.4,39,-.22,.82]},
 full:{visible:all,selected:'block',badge:'R4 전체 차량 · V2 학습 기능 통합',text:'전체 차량에서 엔진·냉각·구동계로 이동해 동일한 모델의 구조와 작동 원리를 관찰합니다.',title:'차량 전체 구성',cam:[0,0,-15,75,-.60,.35]},
 overview:{visible:['engine','intake','ignition','cooling','lubrication','transmission','electrical'],selected:'block',badge:'엔진룸 · 파워트레인 구성',text:'R4의 상세 엔진·냉각 구조와 V2의 부품 설명을 한 모델에서 확인합니다.',title:'엔진룸 배치',cam:[-.3,.22,.2,14,-.49,.35]},
 internals:{visible:['engine'],selected:'piston1',badge:'4행정 · 크랭크–로드–피스톤 연결',text:'4행정은 크랭크축 2회전입니다. 피스톤·핀·링·로드는 같은 실린더의 운동을 공유합니다. 밸브 위상은 학습용 단순화입니다.',title:'엔진 기구학',cam:[0,.3,0,8.5,-.37,.26]},
@@ -140,7 +140,8 @@ turbo:{visible:['engine','intake','exhaust'],selected:'turbo',badge:'배기가�
 drive:{visible:['engine','transmission','suspension','wheels'],selected:'planetarysun',badge:'엔진 → 변속기 → 구동축',text:'유성기어·클러치·차동기어의 형상을 확인합니다. 실제 6T40 단수별 구동비와 클러치 체결을 재현한 모델은 아닙니다.',title:'동력 전달',cam:[-2,-.6,0,17,-.45,.2]},
 oil:{visible:['engine','lubrication'],selected:'oilpump',badge:'오일팬 → 펌프 → 필터 → 베어링',text:'V2의 윤활 학습 경로를 R4의 동일 엔진 좌표에 연결했습니다. 유량·압력은 계산하지 않습니다.',title:'윤활 경로',cam:[.2,-.25,0,10.5,-.37,.25]},
 ignition:{visible:['engine','ignition','intake'],selected:'coilmodule',badge:'V2 점화 학습 · 점화순서 1–3–4–2',text:'주황색 표시는 실린더별 연소 시점이며 실제 화염 해석은 아닙니다. 1~4번 실린더를 선택해 행정을 확인하세요.',title:'점화·연료분사',cam:[0,.56,0,10,-.42,.44]},
-suspension:{visible:['suspension','steering','brakes','wheels'],selected:'spring_FR',badge:'R8 · 전륜 현가 · 실차 규격 휠',text:'축거 2685mm, 윤거 전1545/후1560mm, 205/60R16 기준. 스트럿·스프링 세부 치수는 추정 형상입니다.',title:'서스펜션 상세',cam:[5.2,.3,0,17,-.70,.22]},
+hvacdetail:{visible:['hvac','electrical'],selected:'r9_blower_impeller',badge:'R9 · 공조 내부 · 부품과 공기 통로',text:'투명 하우징 안의 블로워, 냉온 혼합 플랩, 열교환기, 액추에이터와 배수관을 관찰합니다. 상세 치수와 유동은 개념 표현입니다.',title:'공조 내부',cam:[-1.2,1,-6.4,9,-.38,.36]},
+suspension:{visible:['suspension','steering','brakes','wheels'],selected:'spring_FR',badge:'R9 · 전륜 현가 · 실차 규격 휠',text:'축거 2685mm, 윤거 전1545/후1560mm, 205/60R16 기준. 스트럿·스프링 세부 치수는 추정 형상입니다.',title:'서스펜션 상세',cam:[5.2,.3,0,17,-.70,.22]},
 chassis:{visible:['structure','suspension','steering','brakes','wheels','transmission','exhaust','fuel'],selected:'cvshaft',badge:'차체 하부 · 현가·조향·제동',text:'R4의 차체 골격과 전후 현가, 구동축, 조향·제동 부품의 배치를 살펴봅니다.',title:'차량 하부 구성',cam:[0,-1,-15,65,-.55,.30]},
 cabin:{visible:['structure','interior','hvac','steering','electrical'],selected:'steering_wheel',badge:'좌핸들 실내 · 공조 · 전장',text:'실내 공간과 공조·전장 부품의 개념 배치입니다. 국내 트림별 사양과 치수는 검증되지 않았습니다.',title:'실내 패키징',cam:[0,1.9,-16.8,29,Math.PI+.48,.76]},
 exterior:{visible:['body','wheels'],selected:'block',badge:'외장·유리 · 전체 패키징',text:'차량 외형의 단순화된 개념 형상입니다. 실제 크루즈 외장 면품질과 정확한 비례를 보증하지 않습니다.',title:'외장 패키징',cam:[0,0,-15,75,-.6,.3]}};
@@ -150,6 +151,8 @@ function updateTags(){for(const tag of tagLinks){const part=renderer.partById.ge
 function updateCooling(dt){if(!model)return;if(state.coolingPlaying)coolingRotorAngle+=dt*2*Math.PI;for(const p of coolParticles){if(!state.coolingPlaying||routeWeight(p.name)<.001)continue;p.t=(p.t+dt*.6*routeWeight(p.name)/pathSample(p.path,0).length)%1;p.pos=pathSample(p.path,p.t).pos}if(state.playing)for(const p of oilParticles){p.t=(p.t+dt*.65*state.speed/pathSample(p.path,0).length)%1;p.pos=pathSample(p.path,p.t).pos}}
 function updateCycle(){let deg=((state.angle*180/Math.PI-model.kinematics.firingOffset[state.selectedCylinder])%720+720)%720;let idx=Math.min(3,Math.floor(deg/180));const stages=['동력 행정','배기 행정','흡입 행정','압축 행정'];$('#strokeName').textContent=stages[idx];$('#strokeName').style.color=strokeColors[idx];$('#angleValue').textContent=Math.round(deg)+'°';$('#globalAngle').textContent=Math.round(state.angle*180/Math.PI%720)+'°';$('#crankSlider').value=state.angle*180/Math.PI%720;$('#cylinderInfo').textContent=(state.selectedCylinder+1)+'번 실린더 · 상대 위상';$('#strokeProgress').style.left=(deg/720*100)+'%';}
 function wireEvents(){
+ $('#hvacDetailBtn').onclick=()=>setMode('hvacdetail');
+ $('#cabinDetailBtn').onclick=()=>{setMode('cabin');state.target=[0,1.8,-15.6];state.dist=25;state.az=Math.PI+.45;state.el=.85;};
  $('#suspensionViewBtn').onclick=()=>setMode('suspension');
  $('#driverViewBtn').onclick=()=>{setMode('cabin');state.target=[2.5,2.0,-8.6];state.dist=10.5;state.az=Math.PI;state.el=.14;setSelected('steering_wheel');};
  $('#cabinTopBtn').onclick=()=>{setMode('cabin');state.target=[0,1.5,-17];state.dist=27;state.az=Math.PI;state.el=1.48;};
@@ -194,7 +197,7 @@ const canvas=$('#glcanvas');let moved=false,last=[0,0];
   window.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA'].includes(document.activeElement.tagName))return;if(e.code==='Space'){e.preventDefault();$('#playBtn').click()}else if(e.code==='KeyR')$('#resetViewBtn').click()});
 }
 function animate(timestamp){if(!renderer)return;const dt=Math.max(0,Math.min(.055,(timestamp-lastTime)/1000||0));lastTime=timestamp;if(state.playing)state.angle=(state.angle+dt*1.36*state.speed)%(Math.PI*4);updateCooling(dt);renderer.render();updateTags();updateCycle();requestAnimationFrame(animate)}
-async function boot(){try{model=await loadR4();renderer=new WebGLViewer($('#glcanvas'));renderer.upload(model);renderer.setupParticles();createToggles();setupTags();wireEvents();setMode(new URLSearchParams(location.search).get('view')==='suspension'?'suspension':'bay');$('#partCount').textContent=renderer.parts.length+' OBJECTS · R4+V2+R8';$('#gpuStatus').textContent='R8 · WEBGL 2';lastTime=performance.now();requestAnimationFrame(animate)}catch(e){console.error(e);$('#errorLayer').hidden=false;$('#errorMessage').textContent=e.message+' · start.bat으로 실행하거나 python -m http.server 8000을 사용해 주세요.';$('#gpuStatus').textContent='렌더러 오류';}}
+async function boot(){try{model=await loadR4();renderer=new WebGLViewer($('#glcanvas'));renderer.upload(model);renderer.setupParticles();createToggles();setupTags();wireEvents();setMode(['suspension','cabin','hvacdetail','internals','bay'].includes(new URLSearchParams(location.search).get('view'))?new URLSearchParams(location.search).get('view'):'bay');$('#partCount').textContent=renderer.parts.length+' OBJECTS · R4+V2+R9';$('#gpuStatus').textContent='R9 · WEBGL 2';lastTime=performance.now();requestAnimationFrame(animate)}catch(e){console.error(e);$('#errorLayer').hidden=false;$('#errorMessage').textContent=e.message+' · start.bat으로 실행하거나 python -m http.server 8000을 사용해 주세요.';$('#gpuStatus').textContent='렌더러 오류';}}
 boot();
 
 

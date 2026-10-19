@@ -38,5 +38,5 @@ test('new headrest supports fold with the rear seat; UI has all three cabin cont
  for(const p of extra.filter(p=>p.meta.rearFoldAttached)){const c=p.bounds[0].map((v,i)=>(v+p.bounds[1][i])/2),q=rearFoldPoint(c,1);assert.ok(q[2]>c[2],p.id);}
  const html=readFileSync(new URL('index.html',import.meta.url),'utf8'),app=readFileSync(new URL('app.js',import.meta.url),'utf8');
  for(const id of ['driverViewBtn','cabinTopBtn','cabinShellBtn']){assert.ok(html.includes('id="'+id+'"'),id);assert.ok(app.includes("$('#"+id+"').onclick"),id);}
- assert.ok(app.includes('part.meta?.rearFoldAttached'));assert.ok(/cruze-full-r[78]\.glb/.test(html));
+ assert.ok(app.includes('part.meta?.rearFoldAttached'));assert.ok(/cruze-full-r[789]\.glb/.test(html));
 });

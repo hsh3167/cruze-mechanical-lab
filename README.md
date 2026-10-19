@@ -1,3 +1,16 @@
+# R9 — Internal components and surface refinement
+
+Live inspection: https://hsh3167.github.io/cruze-mechanical-lab/?view=cabin
+HVAC cutaway: https://hsh3167.github.io/cruze-mechanical-lab/?view=hvacdetail
+
+Adds 109 selectable assemblies across cabin (29), safety (5), door service parts (24), HVAC (19), luggage space (2), engine service (22), and transmission (8). Refines 22 existing surfaces/housings. Total: 857 web objects, 853 metric GLB meshes, 17 systems.
+
+Added major gaps: starter and solenoid, throttle body/plate/actuator, crank/cam/knock/oil/coolant/exhaust sensors, timing guides/tensioner, PCV cap, turbo service lines, transmission pump/valve body/solenoids/filter/parking pawl, blower impeller, HVAC doors/actuators/core fins/drain/expansion valve, SRS controller, seat/roof/trunk wiring and door service parts. Rounded seat upholstery, headrests and dashboard; layered fabric, seams, trim, vent blades and display face detail.
+
+All 26 geometry, legacy integration, vehicle dimension, packaging-envelope and metric-export checks pass. Run npm test; regenerate with node export-r9.mjs. Earlier GLBs remain unchanged.
+
+Scope: these are educational representations of major assemblies, not a verified complete OEM BOM or exact 2014 Korean trim. Coordinates, mounting, pin counts and internal clearances remain illustrative. Airbags are stowed. 205/60R16 remains the assumed baseline; wheelbase and track calibration retained. Existing spare-wheel representation is not confirmation that the owner's vehicle was equipped with one.
+
 # R8 — Dimension-based wheels and detailed suspension
 
 Live viewer: https://hsh3167.github.io/cruze-mechanical-lab/

@@ -32,5 +32,5 @@ test('R8 GLB is in metres and matches runtime geometry within 0.01mm',()=>{
 });
 test('dimension source, assumptions and suspension view shipped',()=>{
  const html=readFileSync(new URL('index.html',import.meta.url),'utf8'),report=JSON.parse(readFileSync(new URL('r8-report.json',import.meta.url)));
- assert.ok(html.includes('suspensionViewBtn'));assert.ok(html.includes('cruze-full-r8.glb'));assert.equal(report.scale.frontTrackMM,1545);assert.ok(report.scope.includes('unconfirmed'));
+ assert.ok(html.includes('suspensionViewBtn'));assert.ok(/cruze-full-r[89]\.glb/.test(html));assert.equal(report.scale.frontTrackMM,1545);assert.ok(report.scope.includes('unconfirmed'));
 });

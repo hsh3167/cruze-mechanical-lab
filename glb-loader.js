@@ -1,3 +1,4 @@
+import {upgradeInternalsR9} from './internals-r9.js';
 import {upgradeChassisR8} from './chassis-r8.js';
 import {buildCabinR7,correctVehicleFrame} from './cabin-r7.js';
 import {buildRecoveryDetails} from './recovery-details.js';
@@ -33,6 +34,6 @@ export async function loadR4(){const [modelResponse,infoResponse]=await Promise.
   for(const part of model.parts){const details=info.descriptions[part.id]||{},u=part.meta;part.name=u.label||details.name||part.id;part.system=u.system||'engine';part.category=info.systemLabels[part.system]||part.system;part.description=details.description||`${part.name}. R4의 ${part.category} 개념 형상입니다. 실차 치수·장착점은 검증되지 않았습니다.`;part.explode=info.explode[part.system]||[0,0,0];part.ghost=['block','head','valvecover','oilpan','gearbox','liners'].includes(part.id)||!!u.coolingShell;part.opacity=part.ghost?.18:part.opacity;part.anim={kind:'world',...u};}
   for(const extra of info.combustion){extra.system='ignition';extra.meta={source:'v2-learning'};model.parts.push(extra)}
   model.parts.push(...buildEngineBay(),...buildRecoveryDetails());
-  model.parts=upgradeChassisR8(correctVehicleFrame(model.parts).concat(buildCabinR7()));
-  return {...info,...model,version:'R8',systems:Object.keys(info.systemLabels)};
+  model.parts=upgradeInternalsR9(upgradeChassisR8(correctVehicleFrame(model.parts).concat(buildCabinR7()))).parts;
+  return {...info,...model,version:'R9',systems:Object.keys(info.systemLabels)};
 }
