@@ -25,7 +25,7 @@ const mat={
   lookAt:(eye,target)=>{const z=vec3.norm(vec3.sub(eye,target)),x=vec3.norm(vec3.cross([0,1,0],z)),y=vec3.cross(z,x);return new Float32Array([x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,-vec3.dot(x,eye),-vec3.dot(y,eye),-vec3.dot(z,eye),1])},
   point:(m,v)=>[m[0]*v[0]+m[4]*v[1]+m[8]*v[2]+m[12],m[1]*v[0]+m[5]*v[1]+m[9]*v[2]+m[13],m[2]*v[0]+m[6]*v[1]+m[10]*v[2]+m[14]]
 };
-function partVisible(p){if(state.mode==='cabin'&&state.cabinCutaway&&(p.meta?.roofTrim||/^(plus_door_trim_|r7_rear_door_trim_|r7_carpet$)/.test(p.id)))return false;if(state.mode==='cabin'&&p.meta?.engineBay)return false;if(!state.visible.has(p.system)||state.hidden.has(p.id)||(state.isolated&&state.isolated!==p.id))return false;
+function partVisible(p){if(state.mode==='suspension'&&/^(steering_wheel$|steering_center$|steering_column$|brake_booster$|master_cylinder$|brake_reservoir$|brakeline_|bay_brake_cap$|bay_booster_vacuum$|r7_master_abs_lines$|r7_booster_pushrod$|r7_handbrake_cables$)/.test(p.id))return false;if(state.mode==='cabin'&&state.cabinCutaway&&(p.meta?.roofTrim||/^(plus_door_trim_|r7_rear_door_trim_|r7_carpet$)/.test(p.id)))return false;if(state.mode==='cabin'&&p.meta?.engineBay)return false;if(!state.visible.has(p.system)||state.hidden.has(p.id)||(state.isolated&&state.isolated!==p.id))return false;
  if(p.meta?.hoodProp&&(!state.hoodOpen||(!state.showBody&&state.mode!=='bay')))return false;
  if(p.meta?.hoodAttached&&!state.showBody&&!['bay','exterior'].includes(state.mode))return false;
  if(state.mode==='bay'){
@@ -194,7 +194,7 @@ const canvas=$('#glcanvas');let moved=false,last=[0,0];
   window.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA'].includes(document.activeElement.tagName))return;if(e.code==='Space'){e.preventDefault();$('#playBtn').click()}else if(e.code==='KeyR')$('#resetViewBtn').click()});
 }
 function animate(timestamp){if(!renderer)return;const dt=Math.max(0,Math.min(.055,(timestamp-lastTime)/1000||0));lastTime=timestamp;if(state.playing)state.angle=(state.angle+dt*1.36*state.speed)%(Math.PI*4);updateCooling(dt);renderer.render();updateTags();updateCycle();requestAnimationFrame(animate)}
-async function boot(){try{model=await loadR4();renderer=new WebGLViewer($('#glcanvas'));renderer.upload(model);renderer.setupParticles();createToggles();setupTags();wireEvents();setMode('bay');$('#partCount').textContent=renderer.parts.length+' OBJECTS · R4+V2+R8';$('#gpuStatus').textContent='R8 · WEBGL 2';lastTime=performance.now();requestAnimationFrame(animate)}catch(e){console.error(e);$('#errorLayer').hidden=false;$('#errorMessage').textContent=e.message+' · start.bat으로 실행하거나 python -m http.server 8000을 사용해 주세요.';$('#gpuStatus').textContent='렌더러 오류';}}
+async function boot(){try{model=await loadR4();renderer=new WebGLViewer($('#glcanvas'));renderer.upload(model);renderer.setupParticles();createToggles();setupTags();wireEvents();setMode(new URLSearchParams(location.search).get('view')==='suspension'?'suspension':'bay');$('#partCount').textContent=renderer.parts.length+' OBJECTS · R4+V2+R8';$('#gpuStatus').textContent='R8 · WEBGL 2';lastTime=performance.now();requestAnimationFrame(animate)}catch(e){console.error(e);$('#errorLayer').hidden=false;$('#errorMessage').textContent=e.message+' · start.bat으로 실행하거나 python -m http.server 8000을 사용해 주세요.';$('#gpuStatus').textContent='렌더러 오류';}}
 boot();
 
 
