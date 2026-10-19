@@ -99,3 +99,12 @@ GitHub Pages에 배포된 주소를 Chrome 또는 Edge에서 엽니다. 다른 P
 - V2: 엔진 학습용 뷰어와 절차적 모델
 - R4: 전체 차량 17개 계통, 465개 표시 객체, 상세 엔진·냉각 구조
 - R5: R4 형상과 V2 학습 기능을 단일 웹 플랫폼으로 통합. 원본 조립체를 중복 추가하지 않았습니다.
+
+
+## R10 · 2026-10-19
+
+New refinement of R9, not recovery of the former cloud R10. Calibrates the closed-body envelope to the Korean GM launch specification: 4605 × 1790 × 1475 mm, 955/965 mm overhangs, preserving the 2685 mm wheelbase, 1545/1560 mm tracks and 205/60R16 wheel model. Adds 27 meshes, repairs 5 shaft/tie-rod geometries, adds material-specific shading, door/window/steering/suspension motion and four four-stage service presets.
+
+Public 2014 Cruze replacement-parts catalog comparison covers 10 selected assemblies; Korean VIN fitment and a complete OEM BOM remain unverified. See audit.html and oem-audit-r10.json. Full-mesh collision, load and service-procedure certification is not claimed.
+
+Validation: 26 existing regression checks and 9 R10 checks passed. Export: npm run export (export-r10.mjs then audit-r10.mjs); test: npm test. The GLB uses metres and stores material and assembly metadata; interactive animations and service transforms run in the web viewer.

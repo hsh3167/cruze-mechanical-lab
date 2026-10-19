@@ -1,0 +1,226 @@
+{
+  "revision": "R10",
+  "created": "2026-10-19",
+  "originalCloudR10Recovered": false,
+  "dimensions": {
+    "lengthMM": 4605,
+    "widthMM": 1790,
+    "heightMM": 1475,
+    "frontOverhangMM": 955,
+    "rearOverhangMM": 965,
+    "wheelbaseMM": 2685,
+    "frontTrackMM": 1545,
+    "rearTrackMM": 1560,
+    "tire": "205/60R16",
+    "source": "https://blog.gm-korea.co.kr/3875",
+    "image": "https://t1.daumcdn.net/cfile/tistory/2428CB3652689CD312"
+  },
+  "bodyWarp": {
+    "bodyWidth": 8.630000114440918,
+    "bodyTop": 7.795502185821533,
+    "front": 7.869999885559082,
+    "rear": -37.66999816894531,
+    "ground": -5.380223463687151,
+    "targetTop": 9.452178770949722
+  },
+  "connections": [
+    {
+      "id": "hub-shaft-FL",
+      "parts": [
+        "halfshaft_FL",
+        "r10_hub_FL"
+      ],
+      "point": [
+        -7.768156424581005,
+        -2.1,
+        0
+      ],
+      "kind": "shared endpoint",
+      "toleranceMM": 5
+    },
+    {
+      "id": "tie-knuckle-FL",
+      "parts": [
+        "tierod_L",
+        "knuckle_FL"
+      ],
+      "point": [
+        -6.65,
+        -1.75,
+        -0.12
+      ],
+      "kind": "endpoint inside knuckle bounds",
+      "toleranceMM": 15
+    },
+    {
+      "id": "hub-shaft-FR",
+      "parts": [
+        "halfshaft_FR",
+        "r10_hub_FR"
+      ],
+      "point": [
+        7.768156424581005,
+        -2.1,
+        0
+      ],
+      "kind": "shared endpoint",
+      "toleranceMM": 5
+    },
+    {
+      "id": "tie-knuckle-FR",
+      "parts": [
+        "tierod_R",
+        "knuckle_FR"
+      ],
+      "point": [
+        6.65,
+        -1.75,
+        -0.12
+      ],
+      "kind": "endpoint inside knuckle bounds",
+      "toleranceMM": 15
+    }
+  ],
+  "repaired": [
+    "halfshaft_FL",
+    "tierod_L",
+    "halfshaft_FR",
+    "tierod_R",
+    "cvshaft"
+  ],
+  "newParts": [
+    "r10_hub_FL",
+    "r10_cvboots_FL",
+    "r10_tie_joint_FL",
+    "r10_balljoint_FL",
+    "r10_hub_FR",
+    "r10_cvboots_FR",
+    "r10_tie_joint_FR",
+    "r10_balljoint_FR",
+    "r10_door_frame_front_-1",
+    "r10_door_hinge_front_-1",
+    "r10_door_weather_front_-1",
+    "r10_door_frame_rear_-1",
+    "r10_door_hinge_rear_-1",
+    "r10_door_weather_rear_-1",
+    "r10_door_frame_front_1",
+    "r10_door_hinge_front_1",
+    "r10_door_weather_front_1",
+    "r10_door_frame_rear_1",
+    "r10_door_hinge_rear_1",
+    "r10_door_weather_rear_1",
+    "r10_hvac_screws",
+    "r10_heater_bulkhead",
+    "r10_hvac_mode_cam",
+    "r10_blower_bracket",
+    "r10_hvac_loom",
+    "r10_heater_clamps",
+    "r10_starter_bolts"
+  ],
+  "limits": [
+    "Body envelope calibrated; surface design remains approximate.",
+    "Suspension and steering motion is an educational kinematic approximation, not a load or collision simulation.",
+    "Only listed connection checks are verified; full interference certification is pending."
+  ],
+  "scale": {
+    "wheelbaseMM": 2685,
+    "mmPerUnit": 99.44444444444444,
+    "frontTrackMM": 1545,
+    "rearTrackMM": 1560,
+    "tire": "205/60R16",
+    "tireWidthMM": 205,
+    "tireDiameterMM": 652.4,
+    "rimDiameterMM": 406.4,
+    "reference": "https://www.chevrolet.co.kr/content/dam/chevrolet/as/kr/ko/index/owner-manuals/02-pdfs/cruze/12-technical-data.pdf"
+  },
+  "internalCoverage": {
+    "cabin": [
+      "seat upholstery",
+      "dashboard finish",
+      "door service hardware",
+      "safety electronics",
+      "roof and trunk wiring"
+    ],
+    "hvac": [
+      "blower impeller",
+      "air-mix and distribution doors",
+      "actuators",
+      "core fins",
+      "condensate drain",
+      "expansion valve"
+    ],
+    "powertrain": [
+      "starter",
+      "throttle body",
+      "engine sensors",
+      "chain guides and tensioner",
+      "turbo service lines",
+      "transmission valve body and pump"
+    ],
+    "limits": "Major educational assemblies only. No claim of complete OEM BOM, verified 2014 Korean trim, internal clearances, or manufacturing geometry."
+  },
+  "added": 109,
+  "groups": {
+    "실내": 29,
+    "안전장치": 5,
+    "도어": 24,
+    "공조": 19,
+    "적재공간": 2,
+    "파워트레인": 22,
+    "변속기": 8
+  },
+  "refined": [
+    "hvac_case",
+    "blower",
+    "dashboard",
+    "seat_cushion_L",
+    "seat_back_L",
+    "headrest_L",
+    "seat_cushion_R",
+    "seat_back_R",
+    "headrest_R",
+    "rear_seat_cushion",
+    "rear_seat_back",
+    "rear_headrest_-4",
+    "rear_headrest_0",
+    "rear_headrest_4",
+    "r7_cushion_bolster_passenger-1",
+    "r7_back_bolster_passenger-1",
+    "r7_cushion_bolster_passenger1",
+    "r7_back_bolster_passenger1",
+    "r7_cushion_bolster_driver-1",
+    "r7_back_bolster_driver-1",
+    "r7_cushion_bolster_driver1",
+    "r7_back_bolster_driver1"
+  ],
+  "exportUnits": "metres",
+  "webObjects": 884,
+  "exportMeshes": 880,
+  "systems": 17,
+  "exportSha256": "cfc3155f20d50857316fe8e2e16654c3a777510d55fc03ca7b2bb60f6275f828",
+  "scope": "Major educational assemblies only. No claim of complete OEM BOM, verified 2014 Korean trim, internal clearances, or manufacturing geometry.",
+  "measuredDimensions": {
+    "lengthMM": 4604.999985165066,
+    "widthMM": 1790,
+    "heightMM": 1475.000018310547,
+    "frontOverhangMM": 954.9999639723036,
+    "rearOverhangMM": 965.0000211927627
+  },
+  "validation": {
+    "existingPassed": 26,
+    "r10Passed": 9,
+    "totalPassed": 35,
+    "checkedAt": "2026-10-19",
+    "checks": [
+      "closed-body dimensions",
+      "wheelbase and tracks",
+      "engine/wheel preservation",
+      "selected interface contacts",
+      "finite indexed geometry",
+      "door/window hinge hierarchy",
+      "steering/suspension/link descriptors",
+      "four-stage service coverage",
+      "metric GLB parity and material separation"
+    ]
+  }
+}

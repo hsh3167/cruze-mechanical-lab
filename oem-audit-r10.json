@@ -1,0 +1,219 @@
+{
+  "revision": "R10",
+  "checkedAt": "2026-10-19",
+  "completeOEMBOM": false,
+  "originalCloudR10Recovered": false,
+  "dimensionSource": {
+    "publisher": "한국GM 톡 BLOG",
+    "date": "2013-10-29",
+    "page": "https://blog.gm-korea.co.kr/3875",
+    "image": "https://t1.daumcdn.net/cfile/tistory/2428CB3652689CD312",
+    "method": "Official launch post specification image visually transcribed",
+    "targets": {
+      "lengthMM": 4605,
+      "widthMM": 1790,
+      "heightMM": 1475,
+      "frontOverhangMM": 955,
+      "rearOverhangMM": 965,
+      "wheelbaseMM": 2685,
+      "frontTrackMM": 1545,
+      "rearTrackMM": 1560,
+      "tire": "205/60R16",
+      "source": "https://blog.gm-korea.co.kr/3875",
+      "image": "https://t1.daumcdn.net/cfile/tistory/2428CB3652689CD312"
+    },
+    "measured": {
+      "lengthMM": 4604.999985165066,
+      "widthMM": 1790,
+      "heightMM": 1475.000018310547,
+      "frontOverhangMM": 954.9999639723036,
+      "rearOverhangMM": 965.0000211927627
+    }
+  },
+  "catalogScope": "Public US 2014 Cruze OEM replacement-parts listings. Part numbers are catalog references, not a Korean-VIN fitment determination. Options, supersessions and quantities are not resolved.",
+  "items": [
+    {
+      "assembly": "캐빈 에어필터",
+      "catalogReferences": "13503675 / 13503677",
+      "modelIds": [
+        "r7_cabin_filter",
+        "r9_filter_pleats"
+      ],
+      "result": "형상 존재 · 여과지 상세",
+      "source": "https://www.gmpartsgiant.com/parts-list/2014-chevrolet-cruze/front_end_sheet_metal_heater/heater_blower_assembly.html",
+      "dimensionVerified": false,
+      "koreanVINVerified": false
+    },
+    {
+      "assembly": "블로워 모터·임펠러",
+      "catalogReferences": "13369460",
+      "modelIds": [
+        "blower",
+        "r9_blower_impeller",
+        "r9_blower_hub"
+      ],
+      "result": "형상 존재 · 회전자 상세",
+      "source": "https://www.gmpartsgiant.com/parts-list/2014-chevrolet-cruze/front_end_sheet_metal_heater/heater_blower_assembly.html",
+      "dimensionVerified": false,
+      "koreanVINVerified": false
+    },
+    {
+      "assembly": "히터 코어",
+      "catalogReferences": "13406298",
+      "modelIds": [
+        "heatercore",
+        "r9_heater_fins"
+      ],
+      "result": "형상 존재 · 핀 상세",
+      "source": "https://www.gmpartsgiant.com/parts-list/2014-chevrolet-cruze/front_end_sheet_metal_heater/heater_blower_assembly.html",
+      "dimensionVerified": false,
+      "koreanVINVerified": false
+    },
+    {
+      "assembly": "풍향 제어 액추에이터",
+      "catalogReferences": "13372986 / 13393291",
+      "modelIds": [
+        "r9_actuator_mode"
+      ],
+      "result": "형상 존재 · 적용 옵션 미확정",
+      "source": "https://www.gmpartsgiant.com/parts-list/2014-chevrolet-cruze/front_end_sheet_metal_heater/heater_blower_assembly.html",
+      "dimensionVerified": false,
+      "koreanVINVerified": false
+    },
+    {
+      "assembly": "온도 혼합 액추에이터",
+      "catalogReferences": "13372987",
+      "modelIds": [
+        "r9_actuator_blend"
+      ],
+      "result": "형상 존재 · 적용 옵션 미확정",
+      "source": "https://www.gmpartsgiant.com/parts-list/2014-chevrolet-cruze/front_end_sheet_metal_heater/heater_blower_assembly.html",
+      "dimensionVerified": false,
+      "koreanVINVerified": false
+    },
+    {
+      "assembly": "풍향 캠·기어",
+      "catalogReferences": "13263294 / 13267333",
+      "modelIds": [
+        "r10_hvac_mode_cam"
+      ],
+      "result": "R10 보완 · 캠과 링크 개념 형상",
+      "source": "https://www.gmpartsgiant.com/parts-list/2014-chevrolet-cruze/front_end_sheet_metal_heater/heater_blower_assembly.html",
+      "dimensionVerified": false,
+      "koreanVINVerified": false
+    },
+    {
+      "assembly": "블로워 제어기 브래킷",
+      "catalogReferences": "13376446",
+      "modelIds": [
+        "r10_blower_bracket"
+      ],
+      "result": "R10 보완 · 장착 브래킷",
+      "source": "https://www.gmpartsgiant.com/parts-list/2014-chevrolet-cruze/front_end_sheet_metal_heater/heater_blower_assembly.html",
+      "dimensionVerified": false,
+      "koreanVINVerified": false
+    },
+    {
+      "assembly": "공조 하니스",
+      "catalogReferences": "13265200",
+      "modelIds": [
+        "r10_hvac_loom"
+      ],
+      "result": "R10 보완 · 배선 경로는 추정",
+      "source": "https://www.gmpartsgiant.com/parts-list/2014-chevrolet-cruze/front_end_sheet_metal_heater/heater_blower_assembly.html",
+      "dimensionVerified": false,
+      "koreanVINVerified": false
+    },
+    {
+      "assembly": "히터 파이프 클램프",
+      "catalogReferences": "93190977",
+      "modelIds": [
+        "r10_heater_clamps"
+      ],
+      "result": "R10 보완 · 클램프 개념 형상",
+      "source": "https://www.gmpartsgiant.com/parts-list/2014-chevrolet-cruze/front_end_sheet_metal_heater/heater_blower_assembly.html",
+      "dimensionVerified": false,
+      "koreanVINVerified": false
+    },
+    {
+      "assembly": "1.4T 스타터·체결부",
+      "catalogReferences": "12745821 / 11048336",
+      "modelIds": [
+        "r9_starter",
+        "r9_starter_solenoid",
+        "r10_starter_bolts"
+      ],
+      "result": "형상 존재 · R10 체결부 보완",
+      "source": "https://www.gmpartswarehouse.com/v-2014-chevrolet-cruze--lt--1-4l-l4-gas/electrical--starter",
+      "dimensionVerified": false,
+      "koreanVINVerified": false
+    }
+  ],
+  "remaining": [
+    "국내 차대번호·RPO별 전체 EPC 목록 및 수량 대조",
+    "카탈로그 옵션별 품번·대체품번 적용 확정",
+    "전체 볼트·클립·가스켓·단자·하니스 분기별 독립 모델",
+    "차체 패널 면품질과 실측 장착점",
+    "전 스트로크 조향·현가·도어의 정밀 충돌 검사",
+    "실차 정비 순서·체결 토크·하중 검증"
+  ],
+  "connectionScope": [
+    {
+      "id": "hub-shaft-FL",
+      "parts": [
+        "halfshaft_FL",
+        "r10_hub_FL"
+      ],
+      "point": [
+        -7.768156424581005,
+        -2.1,
+        0
+      ],
+      "kind": "shared endpoint",
+      "toleranceMM": 5
+    },
+    {
+      "id": "tie-knuckle-FL",
+      "parts": [
+        "tierod_L",
+        "knuckle_FL"
+      ],
+      "point": [
+        -6.65,
+        -1.75,
+        -0.12
+      ],
+      "kind": "endpoint inside knuckle bounds",
+      "toleranceMM": 15
+    },
+    {
+      "id": "hub-shaft-FR",
+      "parts": [
+        "halfshaft_FR",
+        "r10_hub_FR"
+      ],
+      "point": [
+        7.768156424581005,
+        -2.1,
+        0
+      ],
+      "kind": "shared endpoint",
+      "toleranceMM": 5
+    },
+    {
+      "id": "tie-knuckle-FR",
+      "parts": [
+        "tierod_R",
+        "knuckle_FR"
+      ],
+      "point": [
+        6.65,
+        -1.75,
+        -0.12
+      ],
+      "kind": "endpoint inside knuckle bounds",
+      "toleranceMM": 15
+    }
+  ],
+  "validation": "Dimensions, finite geometry, selected anchor contacts, motion descriptors, service stages and GLB parity tested. No full-mesh collision certification."
+}
