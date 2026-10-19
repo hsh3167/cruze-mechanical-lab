@@ -1,0 +1,20 @@
+{
+  "revision": "R8",
+  "scale": {
+    "wheelbaseMM": 2685,
+    "mmPerUnit": 99.44444444444444,
+    "frontTrackMM": 1545,
+    "rearTrackMM": 1560,
+    "tire": "205/60R16",
+    "tireWidthMM": 205,
+    "tireDiameterMM": 652.4,
+    "rimDiameterMM": 406.4,
+    "reference": "https://www.chevrolet.co.kr/content/dam/chevrolet/as/kr/ko/index/owner-manuals/02-pdfs/cruze/12-technical-data.pdf"
+  },
+  "exportUnits": "metres",
+  "webObjects": 748,
+  "exportMeshes": 744,
+  "systems": 17,
+  "exportSha256": "a94eab976d85d7bba279c1977c670b57b0a2058a9561cfd742e0854dcb4e4006",
+  "scope": "Vehicle wheelbase, tracks and 205/60R16 tyre dimensions calibrated. Original body envelope not dimensionally calibrated. Suspension details illustrative; no validated OEM spring/strut dimensions or contact checks. 16-inch baseline assumed; actual vehicle trim unconfirmed."
+}

@@ -1,3 +1,15 @@
+# R8 — Dimension-based wheels and detailed suspension
+
+Live viewer: https://hsh3167.github.io/cruze-mechanical-lab/
+
+Calibrates wheelbase 2685mm, front/rear wheel-centre tracks 1545/1560mm and nominal 205/60R16 tyres (205mm section envelope, 652.4mm diameter). This is a 16-inch baseline assumption; the owner's actual installed wheel specification has not been confirmed. Reference: https://www.chevrolet.co.kr/content/dam/chevrolet/as/kr/ko/index/owner-manuals/02-pdfs/cruze/12-technical-data.pdf (J300 manual, not a 2014-specific trim certificate).
+
+Rebuilds all four tyres with rounded sidewalls and tread detail, profiled 16-inch rims, twin spokes, five wheel nuts and valve stems. Adds spring seats, closed-end coil detail, dust boots, bump stops, strut-knuckle brackets, ball-joint boots and arm bushings. Suspension component dimensions remain illustrative; the original body envelope is not calibrated to complete OEM dimensions.
+
+748 web objects, 744 GLB meshes across 17 systems. Lower object count reflects grouping of wheel spokes and nuts. R8 GLB exports in metres (root scale), with a 2.685m wheelbase. Earlier GLBs remain unchanged.
+
+20 geometry, integration, dimensional and metric-export checks pass. Use npm test and node export-r8.mjs. The new Suspension Detail view is in the left sidebar. R4/V2 engine learning, hood and rear-seat functions remain available.
+
 # R7 — Left-hand drive correction and cabin expansion
 
 R7 corrects the steering wheel, instruments, pedals and related brake components to the vehicle's left side. Adds 168 cabin and service-connection objects: 776 web objects, 772 exported meshes, 17 systems. Includes driver view, cabin top view and cabin shell visibility controls. Download: cruze-full-r7.glb.
