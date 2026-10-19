@@ -4,7 +4,7 @@ import {spawnSync} from 'node:child_process';
 import {auditMotion,loadMotionParts} from './motion-audit.mjs';
 const root=new URL('./',import.meta.url),output=new URL('release-validation.json',root);
 const save=value=>writeFileSync(output,JSON.stringify(value,null,2)+'\n');
-const hash=name=>createHash('sha256').update(readFileSync(new URL(name,root))).digest('hex');
+const hash=name=>{const bytes=readFileSync(new URL(name,root));return createHash('sha256').update(name.endsWith('.glb')?bytes:bytes.toString('utf8').replace(/\r\n/g,'\n')).digest('hex');};
 // Invalidate an earlier success before any operation that could fail.
 save({revision:'R10.1',passed:false,status:'running'});
 try{
@@ -19,6 +19,6 @@ try{
  const motion=auditMotion(loadMotionParts());if(!motion.passed)throw Error(JSON.stringify(motion.failures));
  writeFileSync(new URL('motion-audit-r10.json',root),JSON.stringify(motion,null,2)+'\n');
  const inputs=readdirSync(root).filter(n=>/\.(?:js|mjs|html|css|glb)$/.test(n)||['package.json','learning.json','oem-audit-r10.json','r10-report.json','archive-sha256.json'].includes(n)).sort();
- save({revision:'R10.1',baseline:archives.baseline,checkedAt:new Date().toISOString(),passed:true,testsPassed:passed,archivesPreserved:Object.keys(archives.files).length,motion,sha256:Object.fromEntries(inputs.map(n=>[n,hash(n)]))});
+ save({revision:'R10.1',baseline:archives.baseline,checkedAt:new Date().toISOString(),passed:true,testsPassed:passed,textHashPolicy:'UTF-8 with LF newlines; GLBs hashed as raw bytes',archivesPreserved:Object.keys(archives.files).length,motion,sha256:Object.fromEntries(inputs.map(n=>[n,hash(n)]))});
  console.log('Release verified: '+passed+' tests; '+motion.partPoses+' sampled part poses; all archives unchanged.');
 }catch(error){save({revision:'R10.1',passed:false,status:'failed',error:error.message});throw error;}
